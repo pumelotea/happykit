@@ -1,0 +1,32 @@
+{
+  "name": "happykit",
+  "version": "1.0.0",
+  "description": "happykit for admin",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "scripts": {
+    "dev": "tsc -w",
+    "build": "tsc",
+    "release": "standard-version"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/pumelotea/happykit.git"
+  },
+  "dependencies": {
+    "@types/node": "^14.14.17",
+    "axios": "^0.21.0",
+    "core-js": "^3.6.5",
+    "js-md5": "0.7.3",
+    "vue": "^3.0.0",
+    "vue-router": "^4.0.0-0"
+  },
+  "devDependencies": {
+    "prettier": "^1.19.1",
+    "standard-version": "^4.4.0",
+    "typescript": "~3.9.3"
+  }
+}
