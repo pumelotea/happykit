@@ -17,6 +17,7 @@ app.use(http)
 app.use(store)
 app.use(eventBus)
 //作为插件安装
-app.use(happyFramework)
+//实际引用情况不需要进行as any转换
+app.use(happyFramework as any)
 app.mount('#app')
 

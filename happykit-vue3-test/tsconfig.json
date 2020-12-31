@@ -16,7 +16,8 @@
     "paths": {
       "@/*": [
         "src/*"
-      ]
+      ],
+      "webpack": ["node_modules/@vue"]
     },
     "lib": [
       "esnext",
