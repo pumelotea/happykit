@@ -10,8 +10,8 @@
     "release": "standard-version"
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "author": "pumelotea",
+  "license": "Apache",
   "repository": {
     "type": "git",
     "url": "https://github.com/pumelotea/happykit.git"
