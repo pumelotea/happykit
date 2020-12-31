@@ -9,6 +9,9 @@
     "build": "tsc",
     "release": "standard-version"
   },
+  "files": [
+    "lib"
+  ],
   "keywords": [],
   "author": "pumelotea",
   "license": "Apache",
