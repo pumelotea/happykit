@@ -77,6 +77,7 @@ export function createDefaultMenuAdapter(): MenuAdapter<MenuItem> {
           treeNode.menuId = uuid()
           treeNode.name = tree[i].name || ''
           treeNode.path = tree[i].path || ''
+          treeNode.icon = tree[i].icon || ''
           treeNode.view = tree[i].view || ''
           treeNode.isRouter = tree[i].isRouter || false
           treeNode.isKeepalive = tree[i].isKeepalive || false
@@ -231,10 +232,10 @@ export function createDefaultRouterInterceptor(
       options,
       async filter(to, from, next) {
         const framework = this.options.framework
-        console.log(
-          'RouterInterceptor Before: ',
-          `${from.path} ---> ${to.path}`
-        )
+        // console.log(
+        //   'RouterInterceptor Before: ',
+        //   `${from.path} ---> ${to.path}`
+        // )
 
         if (!next) {
           throw Error('RouterInterceptor:next is undefined')
@@ -275,9 +276,9 @@ export function createDefaultRouterInterceptor(
             'background:transparent'
           )
           //跳转到目标路由
-          console.log(
-            framework.options.app?.config.globalProperties.$router.getRoutes()
-          )
+          // console.log(
+          //   framework.options.app?.config.globalProperties.$router.getRoutes()
+          // )
           // console.log(await framework.options.app?.config.globalProperties.$router.isReady())
 
           next(to)

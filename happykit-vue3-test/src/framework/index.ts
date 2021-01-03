@@ -1,3 +1,4 @@
+// @ts-ignore
 import { createHappyFramework } from '../../../lib'
 
 //创建框架实例

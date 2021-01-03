@@ -165,7 +165,7 @@ export function createHappyFramework(options?: any): HappyKitFramework {
             return
           }
           const res = this.navigatorList.value.splice(pos, 1)
-          console.log(res)
+          // console.log(res)
           // 如果关闭的是正在激活的路由，需要倒退一个路由
           const needNavs: Array<NavItem> = []
           if (pageId === this.currentMenuRoute.value?.pageId) {
