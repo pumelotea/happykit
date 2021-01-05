@@ -64,16 +64,16 @@ export default {
     const tp: any = [NavCloseType.ALL, NavCloseType.LEFT, NavCloseType.RIGHT, NavCloseType.OTHER, NavCloseType.SELF]
     const closeNav = (type: number, pageId?: string) => {
       instance.closeNav(tp[type], pageId, (removedNavs: any, needNavs: any) => {
-        // console.log('已经移除1', removedNavs)
-        // console.log('需要跳转3', needNavs)
+        console.log('已经移除1', removedNavs)
+        console.log('需要跳转3', needNavs)
         // console.log('更新后的NavList', navList.value)
-        // if (needNavs.length > 0) {
-        //   router.push(needNavs[0].to)
-        // } else {
-        //   if (type === 0){
-        //     router.push('/')
-        //   }
-        // }
+        if (needNavs.length > 0) {
+          router.push(needNavs[0].to)
+        } else {
+          if (navList.value.length === 0){
+            router.push('/')
+          }
+        }
       })
     }
 
