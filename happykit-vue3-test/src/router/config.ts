@@ -1,5 +1,5 @@
 import { RouteRecordRaw } from 'vue-router'
-import { createDefaultRouterInterceptor,RouterInterceptorType } from '../../../lib'
+import { createDefaultRouterInterceptor,RouterInterceptorType } from '../../../src'
 
 //导入框架实例
 import happyFramework from '@/framework'
@@ -53,7 +53,7 @@ export const beforeEachHandler = (to: any, from: any, next: any) => {
 // eslint-disable-next-line no-unused-vars
 export const afterEachHandler = (to: any, from: any) => {
   //使用拦截器
-  afterInterceptor.filter(to,from)
+  // afterInterceptor.filter(to,from)
 }
 
 

@@ -1,13 +1,13 @@
 <template>
   <div>
-    <p v-for="e in routeMappingList.value" :key="e.menuId">
+    <p v-for="e in routeMappingList" :key="e.menuId">
       <a @click="goto(e.menuId)">{{e.menuId}} - {{e.name}} - {{e.routerPath}}</a>
     </p>
     <p>面包屑</p>
     <span>{{breadcrumb}}</span>
     <p>当前路由</p>
-    <div v-if="currentRouteMenu.value">
-      【{{currentRouteMenu.value.title}}】
+    <div v-if="currentRouteMenu">
+      【{{currentRouteMenu.title}}】
     </div>
     <div>
       <button @click="openNav('dash-1111')">open1</button>
@@ -18,24 +18,25 @@
     <button @click="closeNav(1)">关闭左侧</button>
     <button @click="closeNav(2)">关闭右侧</button>
     <button @click="closeNav(3)">关闭其他</button>
-    <div v-for="e in navList.value" :key="e.pageId">
+    <div v-for="e in navList" :key="e.pageId">
       <button @click="closeNav(4,e.pageId)">CLOSE</button>
-      <a :style="currentRouteMenu.value?.pageId===e.pageId?'color:red':''" @click="navClick(e.pageId)">{{e.title}}</a>
+      <a :style="currentRouteMenu?.pageId===e.pageId?'color:red':''" @click="navClick(e.pageId)">{{e.title}}</a>
+    </div>
+    <div>
+      {{navList.length}}
     </div>
     <div style="height: 500px;width: 400px;background: antiquewhite">
-      <router-view/>
+      <router-view />
     </div>
   </div>
 </template>
 
 <script lang="ts">
 
-import { computed, getCurrentInstance } from 'vue'
-// @ts-ignore
-import { HappyKitFramework, NavCloseType } from '../../../../lib'
-// import { injectRoutes } from '@/core/factory'
-// @ts-ignore
-// import routerData from '@/core/data/routerData'
+import { computed, getCurrentInstance, watchEffect, watch, reactive, isReactive, isRef, ref, onMounted } from 'vue'
+import { HappyKitFramework, NavCloseType } from '../../../../src'
+import { Router } from 'vue-router'
+
 export default {
   setup() {
     const self = getCurrentInstance()
@@ -51,11 +52,11 @@ export default {
       return currentRouteMenu.value?.menuItem.breadcrumb.map((e: any) => e.name).join('/')
     })
 
-    const router = ctx.$router
+    const router = ctx.$router as Router
 
     const goto = (menuId: string) => {
       instance.clickMenuItem(menuId, (menuItems: any) => {
-        console.log('需要跳转1', menuItems)
+        // console.log('需要跳转1', menuItems)
         router.push(menuItems[0].routerPath)
       })
     }
@@ -63,20 +64,24 @@ export default {
     const tp: any = [NavCloseType.ALL, NavCloseType.LEFT, NavCloseType.RIGHT, NavCloseType.OTHER, NavCloseType.SELF]
     const closeNav = (type: number, pageId?: string) => {
       instance.closeNav(tp[type], pageId, (removedNavs: any, needNavs: any) => {
-        console.log('已经移除1', removedNavs)
-        console.log('需要跳转3', needNavs)
-        if (needNavs.length>0){
-          router.push(needNavs[0].to)
-        }else{
-          router.push('/')
-        }
+        // console.log('已经移除1', removedNavs)
+        // console.log('需要跳转3', needNavs)
+        // console.log('更新后的NavList', navList.value)
+        // if (needNavs.length > 0) {
+        //   router.push(needNavs[0].to)
+        // } else {
+        //   if (type === 0){
+        //     router.push('/')
+        //   }
+        // }
+        // ctx.$forceUpdate()
       })
     }
 
     const navClick = (pageId: string) => {
       instance.clickNavItem(pageId, (a: any, needNavs: any) => {
-        console.log('需要跳转2', needNavs)
-        if (needNavs.length>0){
+        // console.log('需要跳转2', needNavs)
+        if (needNavs.length > 0) {
           router.push(needNavs[0].to)
         }
       })
@@ -85,9 +90,8 @@ export default {
     const openNav = (title: string) => {
       const node = instance.openNav('/dashboard?id=1&title=' + title, routeMappingList.value[0], title)
       instance.setCurrentMenuRoute(node)
-      console.log('需要跳转4', node)
+      // console.log('需要跳转4', node)
       router.push(node!.to)
-
     }
 
     return {
@@ -99,9 +103,9 @@ export default {
       goto,
       closeNav,
       navClick,
-      openNav
+      openNav,
     }
-  }
+  },
 }
 </script>
 <style>
