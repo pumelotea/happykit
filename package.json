@@ -7,6 +7,7 @@
   "scripts": {
     "dev": "tsc -w",
     "build": "tsc",
+    "copy": "cp -R lib/ happykit-vue3-test/src/lib/",
     "release": "standard-version"
   },
   "files": [

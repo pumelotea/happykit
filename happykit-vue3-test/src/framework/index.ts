@@ -1,10 +1,7 @@
-import {ref} from 'vue'
 //创建框架实例
 
-import { createHappyFramework } from '../../../src'
+import { createHappyFramework } from '@/lib'
 
 const happyFramework = createHappyFramework()
-
-
 
 export default happyFramework

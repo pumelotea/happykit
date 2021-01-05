@@ -34,7 +34,7 @@
 <script lang="ts">
 
 import { computed, getCurrentInstance, watchEffect, watch, reactive, isReactive, isRef, ref, onMounted } from 'vue'
-import { HappyKitFramework, NavCloseType } from '../../../../src'
+import { HappyKitFramework, NavCloseType } from '@/lib'
 import { Router } from 'vue-router'
 
 export default {
@@ -74,7 +74,6 @@ export default {
         //     router.push('/')
         //   }
         // }
-        // ctx.$forceUpdate()
       })
     }
 
@@ -93,7 +92,6 @@ export default {
       // console.log('需要跳转4', node)
       router.push(node!.to)
     }
-
     return {
       menuTree,
       navList,

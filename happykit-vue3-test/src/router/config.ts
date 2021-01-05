@@ -1,5 +1,5 @@
 import { RouteRecordRaw } from 'vue-router'
-import { createDefaultRouterInterceptor,RouterInterceptorType } from '../../../src'
+import { createDefaultRouterInterceptor,RouterInterceptorType } from '@/lib'
 
 //导入框架实例
 import happyFramework from '@/framework'
