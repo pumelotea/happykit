@@ -1,5 +1,10 @@
-import { reactive, App } from 'vue'
+import { reactive, App, ref,isRef } from 'vue'
 import { deepClone, uuid } from '../utils'
+
+const raw:number[]=[]
+export const list = ref(raw)
+
+
 import {
   HAPPYKIT_LOCAL_STORAGE,
   HappyKitFramework,
@@ -10,11 +15,11 @@ import {
   MenuItem,
   NAV_TITLE,
   NavCloseType,
-  NavItem
+  NavItem,
 } from '../types'
 import {
   createDefaultMenuAdapter,
-  createDefaultPageIdFactory
+  createDefaultPageIdFactory,
 } from '../factory'
 
 /**
@@ -34,14 +39,14 @@ const clearNavTitleLocalStorage = (list: Array<NavItem>) => {
 export function createHappyFramework(options?: any): HappyKitFramework {
   const frameworkInstance: HappyKitFramework = {
     options: {},
-    menuTree: reactive({ value: [] }),
-    navigatorList: reactive({ value: [] }),
-    routeMappingList: reactive({ value: [] }),
-    menuIdMappingMap: reactive({ value: new Map<string, MenuItem>() }),
-    currentMenuRoute: reactive({ value: null }),
+    menuTree: ref([]),
+    navigatorList: ref([]),
+    routeMappingList: ref([]),
+    menuIdMappingMap: ref(new Map<string, MenuItem>()),
+    currentMenuRoute: ref(null),
     routerInitiated: false,
     tracker: {
-      clientId: ''
+      clientId: '',
     },
     install(app: App) {
       this.options.app = app
@@ -50,7 +55,7 @@ export function createHappyFramework(options?: any): HappyKitFramework {
     init(options?: HappyKitFrameworkOption) {
       this.options = options || {
         menuAdapter: createDefaultMenuAdapter(),
-        pageIdFactory: createDefaultPageIdFactory(this)
+        pageIdFactory: createDefaultPageIdFactory(this),
       }
       this.initTracker()
     },
@@ -66,7 +71,7 @@ export function createHappyFramework(options?: any): HappyKitFramework {
       const {
         routeMappingList,
         menuTreeConverted,
-        menuIdMappingMap
+        menuIdMappingMap,
       } = dataAdapter.convert(rawData)
       this.menuTree.value = menuTreeConverted
       this.routeMappingList.value = routeMappingList
@@ -136,21 +141,22 @@ export function createHappyFramework(options?: any): HappyKitFramework {
 
       //读取缓存中的对应标题
       const cacheTitle = localStorage.getItem(
-        `${HAPPYKIT_LOCAL_STORAGE}/${NAV_TITLE}/${nextPageId}`
+        `${HAPPYKIT_LOCAL_STORAGE}/${NAV_TITLE}/${nextPageId}`,
       )
 
       const newNav = {
         pageId: nextPageId,
         title: title || cacheTitle || menuItem.name,
         to: to,
-        menuItem: menuItem
+        menuItem: menuItem,
       }
+
       this.navigatorList.value.push(newNav)
 
       //持久化页面对应的标题
       localStorage.setItem(
         `${HAPPYKIT_LOCAL_STORAGE}/${NAV_TITLE}/${newNav.pageId}`,
-        newNav.title
+        newNav.title,
       )
 
       return newNav
@@ -158,14 +164,15 @@ export function createHappyFramework(options?: any): HappyKitFramework {
     closeNav(type: NavCloseType, pageId?: string, event?: HappyKitNavEvent) {
       switch (type) {
         case NavCloseType.SELF: {
+          //搜索待关闭的导航项
           const pos = this.navigatorList.value.findIndex(
-            e => e.pageId === pageId
+            e => e.pageId === pageId,
           )
           if (pos === -1) {
             return
           }
+          // 删除待关闭的导航项
           const res = this.navigatorList.value.splice(pos, 1)
-          // console.log(res)
           // 如果关闭的是正在激活的路由，需要倒退一个路由
           const needNavs: Array<NavItem> = []
           if (pageId === this.currentMenuRoute.value?.pageId) {
@@ -185,7 +192,7 @@ export function createHappyFramework(options?: any): HappyKitFramework {
         }
         case NavCloseType.LEFT: {
           const pos = this.navigatorList.value.findIndex(
-            e => e.pageId === this.currentMenuRoute.value?.pageId
+            e => e.pageId === this.currentMenuRoute.value?.pageId,
           )
           if (pos === -1) {
             return
@@ -197,22 +204,15 @@ export function createHappyFramework(options?: any): HappyKitFramework {
         }
         case NavCloseType.RIGHT: {
           const pos = this.navigatorList.value.findIndex(
-            e => e.pageId === this.currentMenuRoute.value?.pageId
+            e => e.pageId === this.currentMenuRoute.value?.pageId,
           )
           if (pos === -1) {
             return
           }
           const res = this.navigatorList.value.splice(
             pos + 1,
-            this.navigatorList.value.length - pos
+            this.navigatorList.value.length - pos,
           )
-          clearNavTitleLocalStorage(res)
-          event && event(res, [])
-          break
-        }
-        case NavCloseType.ALL: {
-          const res = [...this.navigatorList.value]
-          this.navigatorList.value = []
           clearNavTitleLocalStorage(res)
           event && event(res, [])
           break
@@ -230,6 +230,13 @@ export function createHappyFramework(options?: any): HappyKitFramework {
           if (tmp) {
             this.navigatorList.value = [tmp as NavItem]
           }
+          clearNavTitleLocalStorage(res)
+          event && event(res, [])
+          break
+        }
+        case NavCloseType.ALL: {
+          const res = [...this.navigatorList.value]
+          this.navigatorList.value = []
           clearNavTitleLocalStorage(res)
           event && event(res, [])
           break
@@ -255,7 +262,7 @@ export function createHappyFramework(options?: any): HappyKitFramework {
       const navItem = this.openNav({ path: res[0].routerPath }, res[0])
       this.setCurrentMenuRoute(navItem)
       event && event(res)
-    }
+    },
   }
   frameworkInstance.init(options)
   return frameworkInstance
