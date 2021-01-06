@@ -7,7 +7,7 @@
   "scripts": {
     "dev": "tsc -w",
     "build": "tsc",
-    "format": "prettier --write \"src/**/*.ts\" \"src/**/*.js\"",
+    "format": "prettier --write \"src/**/*.ts\"",
     "lint": "tslint -p tsconfig.json",
     "copy": "cp -R lib/ example/src/lib/",
     "release": "standard-version",

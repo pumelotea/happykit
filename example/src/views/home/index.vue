@@ -34,9 +34,8 @@
 <script lang="ts">
 
 import { computed, getCurrentInstance, watchEffect, watch, reactive, isReactive, isRef, ref, onMounted } from 'vue'
-import { HappyKitFramework, NavCloseType } from '@/lib'
+import { HappyKitFramework, NavCloseType, HappyKitRouter } from '@/lib'
 import { Router } from 'vue-router'
-
 export default {
   setup() {
     const self = getCurrentInstance()
@@ -87,11 +86,9 @@ export default {
     }
 
     const openNav = (title: string) => {
-      const node = instance.openNav('/dashboard?id=1&title=' + title, routeMappingList.value[0], title)
-      instance.setCurrentMenuRoute(node)
-      // console.log('需要跳转4', node)
-      router.push(node!.to)
+      (router as HappyKitRouter).push('/dashboard?id=1&title=' + title,title);
     }
+
     return {
       menuTree,
       navList,

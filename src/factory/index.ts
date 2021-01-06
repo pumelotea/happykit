@@ -1,6 +1,9 @@
 import {
   HAPPYKIT_INJECT,
+  HAPPYKIT_LOCAL_STORAGE,
+  NAV_TITLE,
   HappyKitFramework,
+  HappyKitRouter,
   LinkTarget,
   MenuAdapter,
   MenuItem,
@@ -12,7 +15,7 @@ import {
   RouterInterceptorType,
 } from '../types'
 import { deepClone, uuid } from '../utils'
-import { RouteLocationRaw, Router } from 'vue-router'
+import { NavigationFailure, RouteLocationRaw, Router } from 'vue-router'
 
 // tslint:disable-next-line:no-var-requires
 const md5: any = require('js-md5')
@@ -211,6 +214,26 @@ export function injectRoutes(options: RouterInjectOption) {
     }
     options.router!.addRoute(parentName, route)
   })
+}
+
+/**
+ * 路由升级
+ * vue-router升级为HappyKitRouter
+ * @param router
+ * @param framework
+ */
+export function upgradeRouter(framework: HappyKitFramework, router: Router): HappyKitRouter {
+  return {
+    ...router,
+    framework,
+    push(to: RouteLocationRaw, title?: string): Promise<NavigationFailure | void | undefined> {
+      if (title) {
+        const nextPageId = this.framework.options.pageIdFactory?.getNextPageId(to)
+        localStorage.setItem(`${HAPPYKIT_LOCAL_STORAGE}/${NAV_TITLE}/${nextPageId}`, title)
+      }
+      return router.push(to)
+    },
+  }
 }
 
 /**

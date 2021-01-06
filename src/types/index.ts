@@ -1,8 +1,15 @@
 /**
  * 框架接口
  */
-import { App, Plugin, Ref } from 'vue'
-import { NavigationGuardNext, RouteLocationNormalized, Router, RouteRecordRaw } from 'vue-router'
+import { App, Ref } from 'vue'
+import {
+  NavigationFailure,
+  NavigationGuardNext,
+  RouteLocationNormalized,
+  RouteLocationRaw,
+  Router,
+  RouteRecordRaw,
+} from 'vue-router'
 
 export const HAPPYKIT_INJECT = 'HAPPYKIT_INJECT'
 export const HAPPYKIT_LOCAL_STORAGE = 'HAPPYKIT_LOCAL_STORAGE'
@@ -409,4 +416,13 @@ export declare interface RouterInterceptor {
    * @param next
    */
   filter(to: RouteLocationNormalized, from: RouteLocationNormalized, next?: NavigationGuardNext): void
+}
+
+/**
+ * vue-router路由子类
+ * 扩展一个重载方法
+ */
+export declare interface HappyKitRouter extends Router {
+  framework: HappyKitFramework
+  push(to: RouteLocationRaw, title?: string): Promise<NavigationFailure | void | undefined>
 }

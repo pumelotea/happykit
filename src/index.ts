@@ -21,6 +21,7 @@ import {
   RouterInjectOption,
   RouterInterceptorOption,
   RouterInterceptor,
+  HappyKitRouter,
 } from './types'
 import { createHappyFramework } from './framework'
 import {
@@ -28,6 +29,7 @@ import {
   createDefaultMenuAdapter,
   createDefaultPageIdFactory,
   injectRoutes,
+  upgradeRouter,
   createDefaultRouterInterceptor,
 } from './factory'
 
@@ -54,10 +56,12 @@ export {
   RouterInjectOption,
   RouterInterceptorOption,
   RouterInterceptor,
+  HappyKitRouter,
   createHappyFramework,
   createEmptyMenuItem,
   createDefaultMenuAdapter,
   createDefaultPageIdFactory,
   injectRoutes,
+  upgradeRouter,
   createDefaultRouterInterceptor,
 }

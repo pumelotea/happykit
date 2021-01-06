@@ -1,5 +1,5 @@
-import { reactive, App, ref, isRef } from 'vue'
-import { deepClone, uuid } from '../utils'
+import { App, ref } from 'vue'
+import { uuid } from '../utils'
 
 const raw: number[] = []
 export const list = ref(raw)
