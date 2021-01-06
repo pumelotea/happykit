@@ -4,3 +4,6 @@
 
 ## 文档
 请移步 https://happykit.org
+
+## 问题反馈
+请提交issue
