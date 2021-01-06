@@ -1,6 +1,6 @@
 {
   "name": "happykit",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "happykit for admin",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -16,7 +16,11 @@
   "files": [
     "lib"
   ],
-  "keywords": ["vue3js","admin","framework"],
+  "keywords": [
+    "vue3js",
+    "admin",
+    "framework"
+  ],
   "contributors": [
     {
       "name": "pumelotea",
@@ -24,8 +28,8 @@
     }
   ],
   "bugs": {
-    "url" : "https://github.com/pumelotea/happykit/issues",
-    "email" : "zf_722@yeah.net"
+    "url": "https://github.com/pumelotea/happykit/issues",
+    "email": "zf_722@yeah.net"
   },
   "author": "pumelotea",
   "license": "Apache",
