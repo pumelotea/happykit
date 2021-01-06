@@ -16,7 +16,17 @@
   "files": [
     "lib"
   ],
-  "keywords": [],
+  "keywords": ["vue3js","admin","framework"],
+  "contributors": [
+    {
+      "name": "pumelotea",
+      "email": "zf_722@yeah.net"
+    }
+  ],
+  "bugs": {
+    "url" : "https://github.com/pumelotea/happykit/issues",
+    "email" : "zf_722@yeah.net"
+  },
   "author": "pumelotea",
   "license": "Apache",
   "repository": {
