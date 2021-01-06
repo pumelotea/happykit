@@ -2,12 +2,7 @@
  * 框架接口
  */
 import { App, Plugin, Ref } from 'vue'
-import {
-  NavigationGuardNext,
-  RouteLocationNormalized,
-  Router,
-  RouteRecordRaw,
-} from 'vue-router'
+import { NavigationGuardNext, RouteLocationNormalized, Router, RouteRecordRaw } from 'vue-router'
 
 export const HAPPYKIT_INJECT = 'HAPPYKIT_INJECT'
 export const HAPPYKIT_LOCAL_STORAGE = 'HAPPYKIT_LOCAL_STORAGE'
@@ -18,7 +13,7 @@ export const NAV_TITLE = 'NAV_TITLE'
  */
 export enum MenuType {
   MENU,
-  BUTTON
+  BUTTON,
 }
 
 /**
@@ -27,7 +22,7 @@ export enum MenuType {
 export enum LinkTarget {
   SELF,
   TAB,
-  BLANK
+  BLANK,
 }
 
 /**
@@ -38,7 +33,7 @@ export enum NavCloseType {
   LEFT,
   RIGHT,
   OTHER,
-  ALL
+  ALL,
 }
 
 /**
@@ -46,7 +41,7 @@ export enum NavCloseType {
  */
 export enum RouterInterceptorType {
   BEFORE,
-  AFTER
+  AFTER,
 }
 
 /**
@@ -54,7 +49,7 @@ export enum RouterInterceptorType {
  */
 export enum HTTPInterceptorType {
   BEFORE,
-  AFTER
+  AFTER,
 }
 
 /**
@@ -64,53 +59,53 @@ export declare interface MenuItem {
   /**
    * 必须要有的数据
    */
-  //菜单id-动态生成
+  // 菜单id-动态生成
   menuId: string
-  //菜单名称
+  // 菜单名称
   name: string
-  //菜单图标
+  // 菜单图标
   icon: string
-  //菜单相对路径
+  // 菜单相对路径
   path: string
-  //视图组件的路径
+  // 视图组件的路径
   view: string
-  //是否为路由；决定了能不能被点击跳转
+  // 是否为路由；决定了能不能被点击跳转
   isRouter: boolean
-  //是否页面开启缓存
+  // 是否页面开启缓存
   isKeepalive: boolean
-  //菜单类型
+  // 菜单类型
   type: MenuType
-  //是否为外部链接
+  // 是否为外部链接
   externalLink: boolean
-  //外部链接的跳转方式
+  // 外部链接的跳转方式
   linkTarget: LinkTarget
-  //外部链接的地址
+  // 外部链接的地址
   externalLinkAddress: string
-  //是否为隐藏菜单
+  // 是否为隐藏菜单
   hide: boolean
-  //是否为主页
+  // 是否为主页
   isHome: boolean
-  //权限key
+  // 权限key
   permissionKey: string
-  //子级菜单
-  children: Array<MenuItem>
+  // 子级菜单
+  children: MenuItem[]
 
   /**
    * 预处理后的数据
    * 使用上面的数据经过预处理后的数据
    */
-  //真实的路由路径；会拼接上下层级的相对路径
+  // 真实的路由路径；会拼接上下层级的相对路径
   routerPath: string
-  //展平后的菜单节点路径
-  menuPath: Array<MenuItem>
-  //面包屑节点数组
-  breadcrumb: Array<MenuItem>
-  //当前节点下可控按钮列表
-  buttonList: Array<MenuItem>
-  //当前节点下可控按钮映射表 按钮标识-按钮节点
+  // 展平后的菜单节点路径
+  menuPath: MenuItem[]
+  // 面包屑节点数组
+  breadcrumb: MenuItem[]
+  // 当前节点下可控按钮列表
+  buttonList: MenuItem[]
+  // 当前节点下可控按钮映射表 按钮标识-按钮节点
   buttonsMap: Map<string, MenuItem>
 
-  //其他可扩展属性
+  // 其他可扩展属性
   [propName: string]: any
 }
 
@@ -118,7 +113,7 @@ export declare interface MenuItem {
  * 追踪器数据结构
  */
 export declare interface Tracker {
-  //客户端id
+  // 客户端id
   clientId: string
 }
 
@@ -126,13 +121,13 @@ export declare interface Tracker {
  * 导航项数据结构
  */
 export declare interface NavItem {
-  //页面id；一定会独立生成，不和菜单id等同
+  // 页面id；一定会独立生成，不和菜单id等同
   pageId: string
-  //页面名称；不一定会使用菜单名称，可以是自定义的名称
+  // 页面名称；不一定会使用菜单名称，可以是自定义的名称
   title: string
-  //跳转目标
+  // 跳转目标
   to: any
-  //对应的菜单节点
+  // 对应的菜单节点
   menuItem: MenuItem
 }
 
@@ -140,7 +135,7 @@ export declare interface NavItem {
  * 通用适配器
  */
 export declare interface Adapter<T> {
-  convert(rawData: any): Array<T>
+  convert(rawData: any): T[]
 }
 
 /**
@@ -159,16 +154,12 @@ export declare interface MenuAdapter<T> {
 /**
  * 导航项相关事件
  */
-export declare interface HappyKitNavEvent {
-  (removedNavs: Array<NavItem>, needNavs: Array<NavItem>): void
-}
+export declare type HappyKitNavEvent = (removedNavs: NavItem[], needNavs: NavItem[]) => void
 
 /**
  * 菜单项相关事件
  */
-export declare interface HappyKitMenuEvent {
-  (menuItems: Array<MenuItem>): void
-}
+export declare type HappyKitMenuEvent = (menuItems: MenuItem[]) => void
 
 /**
  * 当前菜单路由
@@ -273,7 +264,7 @@ export declare interface HappyKitFramework {
    * 获取面包屑
    * @param pageId 如果不传，默认获取当前激活的
    */
-  getBreadcrumb(pageId?: string): Array<MenuItem>
+  getBreadcrumb(pageId?: string): MenuItem[]
 
   /**
    * 获取追踪器实例
@@ -323,11 +314,7 @@ export declare interface HappyKitFramework {
    * @param pageId
    * @param event
    */
-  closeNav(
-    type: NavCloseType,
-    pageId?: string,
-    event?: HappyKitNavEvent,
-  ): void
+  closeNav(type: NavCloseType, pageId?: string, event?: HappyKitNavEvent): void
 
   /**
    * 点击导航项
@@ -348,7 +335,6 @@ export declare interface HappyKitFramework {
    * @param app
    */
   install(app: App): void
-
 }
 
 /**
@@ -367,7 +353,7 @@ export declare interface RouterInjectOption {
   /**
    * 待注入的路由数组
    */
-  routes: Array<MenuItem>
+  routes: MenuItem[]
 
   /**
    * 视图组件加载器
@@ -422,9 +408,5 @@ export declare interface RouterInterceptor {
    * @param from
    * @param next
    */
-  filter(
-    to: RouteLocationNormalized,
-    from: RouteLocationNormalized,
-    next?: NavigationGuardNext,
-  ): void
+  filter(to: RouteLocationNormalized, from: RouteLocationNormalized, next?: NavigationGuardNext): void
 }

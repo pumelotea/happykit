@@ -7,6 +7,8 @@
   "scripts": {
     "dev": "tsc -w",
     "build": "tsc",
+    "format": "prettier --write \"src/**/*.ts\" \"src/**/*.js\"",
+    "lint": "tslint -p tsconfig.json",
     "copy": "cp -R lib/ happykit-vue3-test/src/lib/",
     "release": "standard-version",
     "publish": "git push --follow-tags origin master && npm publish"
@@ -30,8 +32,10 @@
     "vue-router": "^4.0.0-0"
   },
   "devDependencies": {
-    "prettier": "^1.19.1",
+    "prettier": "^2.2.1",
     "standard-version": "^4.4.0",
+    "tslint": "^6.1.3",
+    "tslint-config-prettier": "^1.18.0",
     "typescript": "~3.9.3"
   }
 }

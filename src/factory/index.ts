@@ -9,11 +9,12 @@ import {
   RouterInjectOption,
   RouterInterceptor,
   RouterInterceptorOption,
-  RouterInterceptorType
+  RouterInterceptorType,
 } from '../types'
 import { deepClone, uuid } from '../utils'
 import { RouteLocationRaw, Router } from 'vue-router'
 
+// tslint:disable-next-line:no-var-requires
 const md5: any = require('js-md5')
 
 /**
@@ -45,7 +46,7 @@ export function createEmptyMenuItem(): MenuItem {
     menuPath: [],
     breadcrumb: [],
     buttonList: [],
-    buttonsMap: new Map<string, MenuItem>()
+    buttonsMap: new Map<string, MenuItem>(),
   }
 }
 
@@ -55,24 +56,25 @@ export function createEmptyMenuItem(): MenuItem {
 export function createDefaultMenuAdapter(): MenuAdapter<MenuItem> {
   return {
     convert(menuTree: any) {
-      const routeMappingList: Array<MenuItem> = []
+      const routeMappingList: MenuItem[] = []
       const menuIdMappingMap = new Map<string, MenuItem>()
-      const menuTreeConverted: Array<MenuItem> = []
+      const menuTreeConverted: MenuItem[] = []
 
       const menuTypeMap: any = {
         menu: MenuType.MENU,
-        button: MenuType.BUTTON
+        button: MenuType.BUTTON,
       }
 
       const linkTargetMap: any = {
         _tab: LinkTarget.TAB,
         _self: LinkTarget.SELF,
-        _blank: LinkTarget.BLANK
+        _blank: LinkTarget.BLANK,
       }
 
-      const forEachTree = (tree: Array<any>, pNode?: MenuItem) => {
+      const forEachTree = (tree: any[], pNode?: MenuItem) => {
+        // tslint:disable-next-line:prefer-for-of
         for (let i = 0; i < tree.length; i++) {
-          //创建新的节点
+          // 创建新的节点
           const treeNode = createEmptyMenuItem()
           treeNode.menuId = uuid()
           treeNode.name = tree[i].name || ''
@@ -83,8 +85,7 @@ export function createDefaultMenuAdapter(): MenuAdapter<MenuItem> {
           treeNode.isKeepalive = tree[i].isKeepalive || false
           treeNode.type = menuTypeMap[tree[i].type] || MenuType.MENU
           treeNode.externalLink = tree[i].externalLink || ''
-          treeNode.linkTarget =
-            linkTargetMap[tree[i].externalLink] || LinkTarget.TAB
+          treeNode.linkTarget = linkTargetMap[tree[i].externalLink] || LinkTarget.TAB
           treeNode.externalLinkAddress = tree[i].externalLinkAddress || ''
           treeNode.hide = tree[i].hide || false
           treeNode.isHome = tree[i].isHome || false
@@ -95,25 +96,25 @@ export function createDefaultMenuAdapter(): MenuAdapter<MenuItem> {
             menuTreeConverted.push(pNode)
           }
           pNode.children.push(treeNode)
-          //拼接路由
+          // 拼接路由
           treeNode.routerPath = pNode.routerPath + treeNode.path
-          //预先生成菜单节点路径
+          // 预先生成菜单节点路径
           const tmpNode = deepClone(treeNode) as MenuItem
           tmpNode.children = []
           tmpNode.menuPath = []
           tmpNode.breadcrumb = []
           treeNode.menuPath = [...pNode.menuPath, tmpNode]
-          //breadcrumb
+          // breadcrumb
           treeNode.breadcrumb = [...pNode.breadcrumb, tmpNode]
 
-          //记录id映射表
+          // 记录id映射表
           menuIdMappingMap.set(treeNode.menuId, treeNode)
 
           if (treeNode.type === MenuType.MENU) {
             if (!treeNode.isRouter) {
               forEachTree(tree[i].children, treeNode)
             } else {
-              //收集按钮
+              // 收集按钮
               tree[i].children.forEach((e: any) => {
                 const btnNode = createEmptyMenuItem()
                 btnNode.menuId = uuid()
@@ -124,8 +125,7 @@ export function createDefaultMenuAdapter(): MenuAdapter<MenuItem> {
                 btnNode.isKeepalive = e.isKeepalive || false
                 btnNode.type = menuTypeMap[e.type] || MenuType.MENU
                 btnNode.externalLink = e.externalLink || ''
-                btnNode.linkTarget =
-                  linkTargetMap[e.externalLink] || LinkTarget.TAB
+                btnNode.linkTarget = linkTargetMap[e.externalLink] || LinkTarget.TAB
                 btnNode.externalLinkAddress = e.externalLinkAddress || ''
                 btnNode.hide = e.hide || false
                 btnNode.isHome = e.isHome || false
@@ -133,24 +133,20 @@ export function createDefaultMenuAdapter(): MenuAdapter<MenuItem> {
                 treeNode.buttonList.push(btnNode)
                 treeNode.buttonsMap.set(btnNode.permissionKey, btnNode)
               })
-              if (
-                !treeNode.externalLink ||
-                (treeNode.externalLink &&
-                  treeNode.linkTarget === LinkTarget.TAB)
-              ) {
+              if (!treeNode.externalLink || (treeNode.externalLink && treeNode.linkTarget === LinkTarget.TAB)) {
                 routeMappingList.push(treeNode)
               }
             }
           }
         }
       }
-      forEachTree(menuTree as Array<any>)
+      forEachTree(menuTree as any[])
       return {
         routeMappingList,
         menuTreeConverted: menuTreeConverted[0].children,
-        menuIdMappingMap
+        menuIdMappingMap,
       }
-    }
+    },
   }
 }
 
@@ -158,23 +154,20 @@ export function createDefaultMenuAdapter(): MenuAdapter<MenuItem> {
  * 创建默认的页面ID生成工厂
  * @param framework 框架上下文
  */
-export function createDefaultPageIdFactory(
-  framework: HappyKitFramework
-): PageIdFactory {
+export function createDefaultPageIdFactory(framework: HappyKitFramework): PageIdFactory {
   return {
-    framework: framework,
+    framework,
     generate(fullPath: string) {
       return md5(fullPath)
     },
     getNextPageId(to: RouteLocationRaw) {
-      const router: Router = this.framework.options.app?.config.globalProperties
-        .$router
+      const router: Router = this.framework.options.app?.config.globalProperties.$router
       if (!router) {
         throw Error('getNextPageId:router instance is null')
       }
       const route = router.resolve(to)
       return this.generate(route.fullPath)
-    }
+    },
   }
 }
 
@@ -192,7 +185,7 @@ export function injectRoutes(options: RouterInjectOption) {
     options.parentRoute.meta._source = HAPPYKIT_INJECT
   } else {
     options.parentRoute.meta = {
-      _source: HAPPYKIT_INJECT
+      _source: HAPPYKIT_INJECT,
     }
   }
 
@@ -200,11 +193,11 @@ export function injectRoutes(options: RouterInjectOption) {
     throw Error('RouterInjectOption:router is undefined')
   }
 
-  //注入父级路由
+  // 注入父级路由
   options.router!.addRoute(options.parentRoute)
 
-  //注入子级路由
-  options.routes.forEach(e => {
+  // 注入子级路由
+  options.routes.forEach((e) => {
     const route = {
       path: e.routerPath,
       name: e.name,
@@ -213,8 +206,8 @@ export function injectRoutes(options: RouterInjectOption) {
         _source: HAPPYKIT_INJECT,
         isKeepalive: e.isKeepalive,
         menuId: e.menuId,
-        externalLinkAddress: e.externalLinkAddress
-      }
+        externalLinkAddress: e.externalLinkAddress,
+      },
     }
     options.router!.addRoute(parentName, route)
   })
@@ -224,9 +217,7 @@ export function injectRoutes(options: RouterInjectOption) {
  * 创建默认的路由拦截器
  * @param options
  */
-export function createDefaultRouterInterceptor(
-  options: RouterInterceptorOption
-): RouterInterceptor {
+export function createDefaultRouterInterceptor(options: RouterInterceptorOption): RouterInterceptor {
   if (options.interceptorType === RouterInterceptorType.BEFORE) {
     return {
       options,
@@ -241,41 +232,37 @@ export function createDefaultRouterInterceptor(
           throw Error('RouterInterceptor:next is undefined')
         }
 
-        //首次初始化
+        // 首次初始化
         if (!framework.routerInitiated) {
           if (!this.options.dataLoader) {
             throw Error('RouterInterceptor:dataLoader is undefined')
           }
 
-          //请求数据
+          // 请求数据
           const rawData = this.options.dataLoader()
-          //初始化失败
+          // 初始化失败
           if (!rawData) {
-            this.options.dataLoadFailureHandler &&
-            this.options.dataLoadFailureHandler()
+            this.options.dataLoadFailureHandler?.()
             return
           }
-          //初始化核心数据
+          // 初始化核心数据
           framework.setMenuTree(rawData)
-          //注入路由
+          // 注入路由
           if (this.options.routerInjectOption) {
             this.options.routerInjectOption.router =
-              this.options.routerInjectOption.router ||
-              framework.options.app?.config.globalProperties.$router
-            this.options.routerInjectOption.routes.push(
-              ...framework.getRouteMappingList().value
-            )
+              this.options.routerInjectOption.router || framework.options.app?.config.globalProperties.$router
+            this.options.routerInjectOption.routes.push(...framework.getRouteMappingList().value)
             injectRoutes(this.options.routerInjectOption)
           }
-          //初始化完成
+          // 初始化完成
           framework.routerInitiated = true
           console.log(
             `%c HappyKit %c Core Data Loaded %c`,
             'background:#35495e ; padding: 1px; border-radius: 3px 0 0 3px;  color: #fff',
             'background:#20a0ff ; padding: 1px; border-radius: 0 3px 3px 0;  color: #fff',
-            'background:transparent'
+            'background:transparent',
           )
-          //跳转到目标路由
+          // 跳转到目标路由
           // console.log(
           //   framework.options.app?.config.globalProperties.$router.getRoutes()
           // )
@@ -285,33 +272,31 @@ export function createDefaultRouterInterceptor(
           return
         }
 
-        const menuId = to.meta['menuId']
+        const menuId = to.meta.menuId
 
-        //非菜单项直接跳转
+        // 非菜单项直接跳转
         if (!menuId) {
           next()
           return
         }
-        const res = framework
-          .getRouteMappingList()
-          .value.filter(e => e.menuId === menuId)
+        const res = framework.getRouteMappingList().value.filter((e) => e.menuId === menuId)
         if (res.length === 0) {
           console.log('RouterInterceptor:MenuItem is not found, nav failed')
           return
         }
         const menuItem = res[0]
-        //菜单项需要
+        // 菜单项需要
         const navItem = framework.openNav(to, menuItem)
         framework.setCurrentMenuRoute(navItem)
         next()
-      }
+      },
     }
   } else {
     return {
       options,
       filter(to, from) {
         console.log('RouterInterceptor After: ', `${from.path} ---> ${to.path}`)
-      }
+      },
     }
   }
 }
