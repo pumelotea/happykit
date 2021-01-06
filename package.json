@@ -9,7 +9,7 @@
     "build": "tsc",
     "format": "prettier --write \"src/**/*.ts\" \"src/**/*.js\"",
     "lint": "tslint -p tsconfig.json",
-    "copy": "cp -R lib/ happykit-vue3-test/src/lib/",
+    "copy": "cp -R lib/ example/src/lib/",
     "release": "standard-version",
     "publish": "git push --follow-tags origin master && npm publish"
   },
