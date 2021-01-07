@@ -5,7 +5,7 @@ const raw: number[] = []
 export const list = ref(raw)
 
 import {
-  HAPPYKIT_LOCAL_STORAGE,
+  HAPPYKIT_STORAGE,
   HappyKitFramework,
   HappyKitFrameworkOption,
   HappyKitMenuEvent,
@@ -24,7 +24,7 @@ import { createDefaultMenuAdapter, createDefaultPageIdFactory, createDefaultTrac
  */
 const clearNavTitleLocalStorage = (navList: NavItem[]) => {
   navList.forEach((e) => {
-    localStorage.removeItem(`${HAPPYKIT_LOCAL_STORAGE}/${NAV_TITLE}/${e.pageId}`)
+    localStorage.removeItem(`${HAPPYKIT_STORAGE}/${NAV_TITLE}/${e.pageId}`)
   })
 }
 
@@ -32,7 +32,7 @@ const clearNavTitleLocalStorage = (navList: NavItem[]) => {
  * 创建核心框架
  * @param options
  */
-export function createHappyFramework(options?: any): HappyKitFramework {
+export function createHappyFramework(options?: HappyKitFrameworkOption): HappyKitFramework {
   const frameworkInstance: HappyKitFramework = {
     options: {},
     menuTree: ref([]),
@@ -48,9 +48,8 @@ export function createHappyFramework(options?: any): HappyKitFramework {
       this.options.app = app
       app.config.globalProperties.$happykit = this
     },
-    // tslint:disable-next-line:no-shadowed-variable
-    init(options?: HappyKitFrameworkOption) {
-      this.options = options || {
+    init(opts?: HappyKitFrameworkOption) {
+      this.options = opts || {
         menuAdapter: createDefaultMenuAdapter(),
         pageIdFactory: createDefaultPageIdFactory(this),
         trackerIdFactory: createDefaultTrackerIdFactory(this),
@@ -135,7 +134,7 @@ export function createHappyFramework(options?: any): HappyKitFramework {
       }
 
       // 读取缓存中的对应标题
-      const cacheTitle = localStorage.getItem(`${HAPPYKIT_LOCAL_STORAGE}/${NAV_TITLE}/${nextPageId}`)
+      const cacheTitle = localStorage.getItem(`${HAPPYKIT_STORAGE}/${NAV_TITLE}/${nextPageId}`)
 
       const newNav = {
         pageId: nextPageId,
@@ -147,7 +146,7 @@ export function createHappyFramework(options?: any): HappyKitFramework {
       this.navigatorList.value.push(newNav)
 
       // 持久化页面对应的标题
-      localStorage.setItem(`${HAPPYKIT_LOCAL_STORAGE}/${NAV_TITLE}/${newNav.pageId}`, newNav.title)
+      localStorage.setItem(`${HAPPYKIT_STORAGE}/${NAV_TITLE}/${newNav.pageId}`, newNav.title)
 
       return newNav
     },

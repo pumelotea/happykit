@@ -1,7 +1,9 @@
 import {
   HAPPYKIT_INJECT,
-  HAPPYKIT_LOCAL_STORAGE,
+  HAPPYKIT_STORAGE,
   NAV_TITLE,
+  SECURITY_TOKEN,
+  SECURITY_USER,
   MenuType,
   LinkTarget,
   NavCloseType,
@@ -40,8 +42,10 @@ import {
 
 export {
   HAPPYKIT_INJECT,
-  HAPPYKIT_LOCAL_STORAGE,
+  HAPPYKIT_STORAGE,
   NAV_TITLE,
+  SECURITY_TOKEN,
+  SECURITY_USER,
   MenuType,
   LinkTarget,
   NavCloseType,

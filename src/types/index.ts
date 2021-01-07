@@ -12,8 +12,10 @@ import {
 } from 'vue-router'
 
 export const HAPPYKIT_INJECT = 'HAPPYKIT_INJECT'
-export const HAPPYKIT_LOCAL_STORAGE = 'HAPPYKIT_LOCAL_STORAGE'
+export const HAPPYKIT_STORAGE = 'HAPPYKIT_STORAGE'
 export const NAV_TITLE = 'NAV_TITLE'
+export const SECURITY_TOKEN = 'SECURITY_TOKEN'
+export const SECURITY_USER = 'SECURITY_USER'
 
 /**
  * 菜单类型
@@ -57,6 +59,14 @@ export enum RouterInterceptorType {
 export enum HTTPInterceptorType {
   BEFORE,
   AFTER,
+}
+
+/**
+ * 存储引擎类型
+ */
+export enum StorageEngine {
+  LOCAL_STORAGE,
+  SESSION_STORAGE,
 }
 
 /**
@@ -247,7 +257,7 @@ export declare interface HappyKitFramework {
    * 初始化器
    * @param options
    */
-  init(options?: any): void
+  init(options?: HappyKitFrameworkOption): void
 
   /**
    * 设置菜单树
@@ -444,9 +454,23 @@ export declare interface HappyKitRouter extends Router {
 export declare type User = any
 
 /**
+ * 安全框架选项
+ */
+export declare interface HappyKitSecurityOption {
+  /**
+   * 存储引擎
+   */
+  storageEngine?: StorageEngine
+}
+
+/**
  * 框架安全接口
  */
 export declare interface HappyKitSecurity {
+  /**
+   * 配置参数
+   */
+  options: HappyKitSecurityOption
   /**
    * 用户对象
    */
@@ -455,6 +479,17 @@ export declare interface HappyKitSecurity {
    * token
    */
   token: string
+
+  /**
+   * 初始化方法
+   * @param options
+   */
+  init(options?: HappyKitSecurityOption): void
+
+  /**
+   * 获取存储器
+   */
+  getStorage(): Storage
 
   /**
    * 刷新用户数据
@@ -489,4 +524,23 @@ export declare interface HappyKitSecurity {
    * 登出
    */
   signOut(): void
+
+  /**
+   * 冷数据加载
+   */
+  loadFromStorage(): void
+  /**
+   * 热数据写入
+   */
+  saveIntoStorage(): void
+
+  /**
+   * 清除存储
+   */
+  flushStorage(): void
+  /**
+   * vue插件
+   * @param app
+   */
+  install(app: App): void
 }

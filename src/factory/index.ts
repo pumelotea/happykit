@@ -1,6 +1,6 @@
 import {
   HAPPYKIT_INJECT,
-  HAPPYKIT_LOCAL_STORAGE,
+  HAPPYKIT_STORAGE,
   NAV_TITLE,
   HappyKitFramework,
   HappyKitRouter,
@@ -243,7 +243,7 @@ export function upgradeRouter(framework: HappyKitFramework, router: Router): Hap
     push(to: RouteLocationRaw, title?: string): Promise<NavigationFailure | void | undefined> {
       if (title) {
         const nextPageId = this.framework.options.pageIdFactory?.getNextPageId(to)
-        localStorage.setItem(`${HAPPYKIT_LOCAL_STORAGE}/${NAV_TITLE}/${nextPageId}`, title)
+        localStorage.setItem(`${HAPPYKIT_STORAGE}/${NAV_TITLE}/${nextPageId}`, title)
       }
       return router.push(to)
     },
