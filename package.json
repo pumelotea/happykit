@@ -11,7 +11,7 @@
     "lint": "tslint -p tsconfig.json",
     "copy": "cp -R lib/ example/src/lib/",
     "release": "standard-version",
-    "publish": "git push --follow-tags origin master && npm publish"
+    "publish-npm": "git push --follow-tags origin master && yarn publish"
   },
   "files": [
     "lib"
