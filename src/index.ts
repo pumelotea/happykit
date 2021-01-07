@@ -22,6 +22,7 @@ import {
   RouterInterceptorOption,
   RouterInterceptor,
   HappyKitRouter,
+  TrackerIdFactory
 } from './types'
 import { createHappyFramework } from './framework'
 import {
@@ -31,6 +32,7 @@ import {
   injectRoutes,
   upgradeRouter,
   createDefaultRouterInterceptor,
+  createDefaultTrackerIdFactory
 } from './factory'
 
 export {
@@ -57,6 +59,7 @@ export {
   RouterInterceptorOption,
   RouterInterceptor,
   HappyKitRouter,
+  TrackerIdFactory,
   createHappyFramework,
   createEmptyMenuItem,
   createDefaultMenuAdapter,
@@ -64,4 +67,5 @@ export {
   injectRoutes,
   upgradeRouter,
   createDefaultRouterInterceptor,
+  createDefaultTrackerIdFactory
 }

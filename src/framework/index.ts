@@ -16,7 +16,7 @@ import {
   NavCloseType,
   NavItem,
 } from '../types'
-import { createDefaultMenuAdapter, createDefaultPageIdFactory } from '../factory'
+import { createDefaultMenuAdapter, createDefaultPageIdFactory, createDefaultTrackerIdFactory } from '../factory'
 
 /**
  * 清除缓存中的导航项名称
@@ -53,6 +53,7 @@ export function createHappyFramework(options?: any): HappyKitFramework {
       this.options = options || {
         menuAdapter: createDefaultMenuAdapter(),
         pageIdFactory: createDefaultPageIdFactory(this),
+        trackerIdFactory: createDefaultTrackerIdFactory(this)
       }
       this.initTracker()
     },
@@ -105,7 +106,10 @@ export function createHappyFramework(options?: any): HappyKitFramework {
       this.tracker.clientId = id || this.refreshClientId()
     },
     refreshClientId() {
-      const id = uuid()
+      if (!this.options.trackerIdFactory){
+        throw Error('TrackerIdFactory is undefined')
+      }
+      const id = this.options.trackerIdFactory?.getId()
       this.tracker.clientId = id
       // 持久化
       localStorage.setItem('clientId', id)

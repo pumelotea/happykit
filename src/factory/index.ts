@@ -13,6 +13,7 @@ import {
   RouterInterceptor,
   RouterInterceptorOption,
   RouterInterceptorType,
+  TrackerIdFactory,
 } from '../types'
 import { deepClone, uuid } from '../utils'
 import { NavigationFailure, RouteLocationRaw, Router } from 'vue-router'
@@ -171,6 +172,19 @@ export function createDefaultPageIdFactory(framework: HappyKitFramework): PageId
       const route = router.resolve(to)
       return this.generate(route.fullPath)
     },
+  }
+}
+
+/**
+ * 创建默认的追踪Id生成工厂
+ * @param framework
+ */
+export function createDefaultTrackerIdFactory(framework: HappyKitFramework): TrackerIdFactory {
+  return {
+    framework,
+    getId(): string {
+      return uuid().replaceAll('-','')
+    }
   }
 }
 

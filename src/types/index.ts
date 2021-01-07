@@ -185,12 +185,21 @@ export declare interface PageIdFactory {
 }
 
 /**
+ * 追踪id工厂结构
+ */
+export declare interface TrackerIdFactory {
+  framework: HappyKitFramework
+  getId(): string
+}
+
+/**
  * 核心框架选项数据结构
  */
 export declare interface HappyKitFrameworkOption {
   app?: App
   menuAdapter?: MenuAdapter<MenuItem>
   pageIdFactory?: PageIdFactory
+  trackerIdFactory?:TrackerIdFactory
 
   [propName: string]: any
 }
