@@ -1,46 +1,54 @@
 <template>
   <div>
-    <p v-for="e in routeMappingList" :key="e.menuId">
-      <a @click="goto(e.menuId)">{{e.menuId}} - {{e.name}} - {{e.routerPath}}</a>
+    <p v-for='e in routeMappingList' :key='e.menuId'>
+      <a @click='goto(e.menuId)'>{{ e.menuId }} - {{ e.name }} - {{ e.routerPath }}</a>
     </p>
     <p>面包屑</p>
-    <span>{{breadcrumb}}</span>
+    <span>{{ breadcrumb }}</span>
     <p>当前路由</p>
-    <div v-if="currentRouteMenu">
-      【{{currentRouteMenu.title}}】
+    <div v-if='currentRouteMenu'>
+      【{{ currentRouteMenu.title }}】
     </div>
     <div>
       <button @click="openNav('dash-1111')">open1</button>
       <button @click="openNav('dash-2222')">open2</button>
       <button @click="openNav('dash-3333')">open3</button>
     </div>
-    <button @click="closeNav(0)">关闭全部</button>
-    <button @click="closeNav(1)">关闭左侧</button>
-    <button @click="closeNav(2)">关闭右侧</button>
-    <button @click="closeNav(3)">关闭其他</button>
-    <div v-for="e in navList" :key="e.pageId">
-      <button @click="closeNav(4,e.pageId)">CLOSE</button>
-      <a :style="currentRouteMenu?.pageId===e.pageId?'color:red':''" @click="navClick(e.pageId)">{{e.title}}</a>
+    <button @click='closeNav(0)'>关闭全部</button>
+    <button @click='closeNav(1)'>关闭左侧</button>
+    <button @click='closeNav(2)'>关闭右侧</button>
+    <button @click='closeNav(3)'>关闭其他</button>
+    <div v-for='e in navList' :key='e.pageId'>
+      <button @click='closeNav(4,e.pageId)'>CLOSE</button>
+      <a :style="currentRouteMenu?.pageId===e.pageId?'color:red':''" @click='navClick(e.pageId)'>{{ e.title }}</a>
     </div>
     <div>
-      {{navList.length}}
+      user：{{ user }}
     </div>
-    <div style="height: 500px;width: 400px;background: antiquewhite">
+    <div style='height: 500px;width: 400px;background: antiquewhite'>
       <router-view />
     </div>
   </div>
 </template>
 
-<script lang="ts">
+<script lang='ts'>
 
 import { computed, getCurrentInstance, watchEffect, watch, reactive, isReactive, isRef, ref, onMounted } from 'vue'
-import { HappyKitFramework, NavCloseType, HappyKitRouter } from '@/lib'
+import { HappyKitFramework, NavCloseType, HappyKitRouter, HappyKitSecurity } from '@/lib'
 import { Router } from 'vue-router'
+
 export default {
   setup() {
     const self = getCurrentInstance()
     const ctx = (self as any).ctx
     const instance = ctx.$happykit as HappyKitFramework
+    const security = ctx.$security as HappyKitSecurity
+    security.signIn('zhufeng', {
+      username: 'zhufeng',
+      image: 'asdasd',
+    })
+    console.log(security)
+    const user = security.getUser()
 
     const menuTree = instance.getMenuTree()
     const routeMappingList = instance.getRouteMappingList()
@@ -69,7 +77,7 @@ export default {
         if (needNavs.length > 0) {
           router.push(needNavs[0].to)
         } else {
-          if (navList.value.length === 0){
+          if (navList.value.length === 0) {
             router.push('/')
           }
         }
@@ -86,8 +94,14 @@ export default {
     }
 
     const openNav = (title: string) => {
-      (router as HappyKitRouter).push('/dashboard?id=1&title=' + title,title);
+      (router as HappyKitRouter).push('/dashboard?id=1&title=' + title, title)
     }
+
+    onMounted(() => {
+      setInterval(() => {
+        user.value.time = new Date().getTime()
+      }, 1000)
+    })
 
     return {
       menuTree,
@@ -95,6 +109,7 @@ export default {
       routeMappingList,
       currentRouteMenu,
       breadcrumb,
+      user,
       goto,
       closeNav,
       navClick,
