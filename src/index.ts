@@ -18,13 +18,16 @@ import {
   PageIdFactory,
   HappyKitFrameworkOption,
   HappyKitFramework,
+  HappyKitSecurity,
+  User,
   RouterInjectOption,
   RouterInterceptorOption,
   RouterInterceptor,
   HappyKitRouter,
-  TrackerIdFactory
+  TrackerIdFactory,
 } from './types'
 import { createHappyFramework } from './framework'
+import { createHappySecurity } from './security'
 import {
   createEmptyMenuItem,
   createDefaultMenuAdapter,
@@ -32,7 +35,7 @@ import {
   injectRoutes,
   upgradeRouter,
   createDefaultRouterInterceptor,
-  createDefaultTrackerIdFactory
+  createDefaultTrackerIdFactory,
 } from './factory'
 
 export {
@@ -55,17 +58,20 @@ export {
   PageIdFactory,
   HappyKitFrameworkOption,
   HappyKitFramework,
+  HappyKitSecurity,
+  User,
   RouterInjectOption,
   RouterInterceptorOption,
   RouterInterceptor,
   HappyKitRouter,
   TrackerIdFactory,
   createHappyFramework,
+  createHappySecurity,
   createEmptyMenuItem,
   createDefaultMenuAdapter,
   createDefaultPageIdFactory,
   injectRoutes,
   upgradeRouter,
   createDefaultRouterInterceptor,
-  createDefaultTrackerIdFactory
+  createDefaultTrackerIdFactory,
 }

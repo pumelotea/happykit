@@ -53,7 +53,7 @@ export function createHappyFramework(options?: any): HappyKitFramework {
       this.options = options || {
         menuAdapter: createDefaultMenuAdapter(),
         pageIdFactory: createDefaultPageIdFactory(this),
-        trackerIdFactory: createDefaultTrackerIdFactory(this)
+        trackerIdFactory: createDefaultTrackerIdFactory(this),
       }
       this.initTracker()
     },
@@ -106,7 +106,7 @@ export function createHappyFramework(options?: any): HappyKitFramework {
       this.tracker.clientId = id || this.refreshClientId()
     },
     refreshClientId() {
-      if (!this.options.trackerIdFactory){
+      if (!this.options.trackerIdFactory) {
         throw Error('TrackerIdFactory is undefined')
       }
       const id = this.options.trackerIdFactory?.getId()

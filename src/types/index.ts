@@ -189,6 +189,7 @@ export declare interface PageIdFactory {
  */
 export declare interface TrackerIdFactory {
   framework: HappyKitFramework
+
   getId(): string
 }
 
@@ -199,7 +200,7 @@ export declare interface HappyKitFrameworkOption {
   app?: App
   menuAdapter?: MenuAdapter<MenuItem>
   pageIdFactory?: PageIdFactory
-  trackerIdFactory?:TrackerIdFactory
+  trackerIdFactory?: TrackerIdFactory
 
   [propName: string]: any
 }
@@ -433,5 +434,59 @@ export declare interface RouterInterceptor {
  */
 export declare interface HappyKitRouter extends Router {
   framework: HappyKitFramework
+
   push(to: RouteLocationRaw, title?: string): Promise<NavigationFailure | void | undefined>
+}
+
+/**
+ * 用户对象
+ */
+export declare type User = any
+
+/**
+ * 框架安全接口
+ */
+export declare interface HappyKitSecurity {
+  /**
+   * 用户对象
+   */
+  user: Ref<User | null>
+  /**
+   * token
+   */
+  token: string
+
+  /**
+   * 刷新用户数据
+   * @param user
+   */
+  refreshUser(user: User): void
+
+  /**
+   * 刷新用户token
+   * @param token
+   */
+  refreshToken(token: string): void
+
+  /**
+   * 获取用户对象
+   */
+  getUser(): Ref<User | null>
+
+  /**
+   * 获取用户token
+   */
+  getToken(): string
+
+  /**
+   * 登录
+   * @param token
+   * @param user
+   */
+  signIn(token: string, user: User): void
+
+  /**
+   * 登出
+   */
+  signOut(): void
 }

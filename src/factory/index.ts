@@ -183,8 +183,8 @@ export function createDefaultTrackerIdFactory(framework: HappyKitFramework): Tra
   return {
     framework,
     getId(): string {
-      return uuid().replaceAll('-','')
-    }
+      return uuid().replaceAll('-', '')
+    },
   }
 }
 
