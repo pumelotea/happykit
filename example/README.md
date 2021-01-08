@@ -1,4 +1,4 @@
-# happykit-vue3-test123123
+# Example
 
 ## Project setup
 ```
