@@ -37,8 +37,13 @@
     "type": "git",
     "url": "https://github.com/pumelotea/happykit.git"
   },
+  "husky": {
+    "hooks": {
+      "pre-commit": "yarn lint && yarn format",
+      "commit-msg": "commitlint -e $HUSKY_GIT_PARAMS"
+    }
+  },
   "dependencies": {
-    "@types/node": "^14.14.17",
     "axios": "^0.21.0",
     "core-js": "^3.6.5",
     "js-md5": "0.7.3",
@@ -46,6 +51,10 @@
     "vue-router": "^4.0.0-0"
   },
   "devDependencies": {
+    "@commitlint/cli": "^11.0.0",
+    "@commitlint/config-conventional": "^11.0.0",
+    "@types/node": "^14.14.17",
+    "husky": "^4.3.7",
     "prettier": "^2.2.1",
     "standard-version": "^4.4.0",
     "tslint": "^6.1.3",
