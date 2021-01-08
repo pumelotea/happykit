@@ -4,7 +4,7 @@ module.exports = {
   css: {
     extract: process.env.NODE_ENV !== 'development',
     // 是否构建样式地图，false 将提高构建速度
-    sourceMap: true,
+    sourceMap: false,
     loaderOptions: {
       scss: {
         // additionalData: `@import "~@/assets/variable.scss";`
