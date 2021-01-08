@@ -1,5 +1,4 @@
 import { App, ref } from 'vue'
-import { uuid } from '../utils'
 
 const raw: number[] = []
 export const list = ref(raw)
@@ -17,6 +16,7 @@ import {
   NavItem,
 } from '../types'
 import { createDefaultMenuAdapter, createDefaultPageIdFactory, createDefaultTrackerIdFactory } from '../factory'
+import permission from '../directive/permission'
 
 /**
  * 清除缓存中的导航项名称
@@ -47,12 +47,17 @@ export function createHappyFramework(options?: HappyKitFrameworkOption): HappyKi
     install(app: App) {
       this.options.app = app
       app.config.globalProperties.$happykit = this
+      if (this.options.autoRegisterDirective){
+        this.options.app?.directive(this.options.permissionDirectiveName || 'point',permission)
+      }
     },
     init(opts?: HappyKitFrameworkOption) {
       this.options = opts || {
         menuAdapter: createDefaultMenuAdapter(),
         pageIdFactory: createDefaultPageIdFactory(this),
         trackerIdFactory: createDefaultTrackerIdFactory(this),
+        autoRegisterDirective: true,
+        permissionDirectiveName: 'point',
       }
       this.initTracker()
     },
