@@ -43,11 +43,10 @@ export default {
     const ctx = (self as any).ctx
     const instance = ctx.$happykit as HappyKitFramework
     const security = ctx.$security as HappyKitSecurity
-    security.signIn('zhufeng', {
-      username: 'zhufeng',
-      image: 'asdasd',
+    security.signIn('token', {
+      username: 'username',
+      image: 'image',
     })
-    console.log(security)
     const user = security.getUser()
 
     const menuTree = instance.getMenuTree()

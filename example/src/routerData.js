@@ -14,7 +14,7 @@ const routerData = [
         view: '',
         isRouter: false,
         isKeepalive: false,
-        type: 'button',
+        type: 'point',
         children: []
       },
       {
@@ -24,7 +24,7 @@ const routerData = [
         view: '',
         isRouter: false,
         isKeepalive: false,
-        type: 'button',
+        type: 'point',
         children: []
       },
       {
@@ -34,7 +34,7 @@ const routerData = [
         view: '',
         isRouter: false,
         isKeepalive: false,
-        type: 'button',
+        type: 'point',
         children: []
       }
       // {
@@ -44,7 +44,7 @@ const routerData = [
       //   view: '',
       //   isRouter: false,
       //   isKeepalive: false,
-      //   type: 'button',
+      //   type: 'point',
       //   children: []
       // }
     ]
@@ -209,7 +209,7 @@ const routerData = [
             view: '',
             isRouter: false,
             isKeepalive: false,
-            type: 'button',
+            type: 'point',
             children: []
           },
           {
@@ -219,7 +219,7 @@ const routerData = [
             view: '',
             isRouter: false,
             isKeepalive: false,
-            type: 'button',
+            type: 'point',
             children: []
           }
         ]
@@ -239,7 +239,7 @@ const routerData = [
             view: '',
             isRouter: false,
             isKeepalive: false,
-            type: 'button',
+            type: 'point',
             children: []
           }
         ]
@@ -259,7 +259,7 @@ const routerData = [
             view: '',
             isRouter: false,
             isKeepalive: false,
-            type: 'button',
+            type: 'point',
             children: []
           }
         ]
@@ -279,7 +279,7 @@ const routerData = [
             view: '',
             isRouter: false,
             isKeepalive: false,
-            type: 'button',
+            type: 'point',
             children: []
           }
         ]
