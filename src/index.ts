@@ -39,6 +39,7 @@ import {
   createDefaultRouterInterceptor,
   createDefaultTrackerIdFactory,
 } from './factory'
+import { Permission } from './directive'
 
 export {
   HAPPYKIT_INJECT,
@@ -78,4 +79,5 @@ export {
   upgradeRouter,
   createDefaultRouterInterceptor,
   createDefaultTrackerIdFactory,
+  Permission,
 }

@@ -22,7 +22,7 @@ export const SECURITY_USER = 'SECURITY_USER'
  */
 export enum MenuType {
   MENU,
-  BUTTON,
+  POINT,
 }
 
 /**
@@ -118,9 +118,9 @@ export declare interface MenuItem {
   // 面包屑节点数组
   breadcrumb: MenuItem[]
   // 当前节点下可控按钮列表
-  buttonList: MenuItem[]
+  pointList: MenuItem[]
   // 当前节点下可控按钮映射表 按钮标识-按钮节点
-  buttonsMap: Map<string, MenuItem>
+  pointsMap: Map<string, MenuItem>
 
   // 其他可扩展属性
   [propName: string]: any
@@ -211,6 +211,8 @@ export declare interface HappyKitFrameworkOption {
   menuAdapter?: MenuAdapter<MenuItem>
   pageIdFactory?: PageIdFactory
   trackerIdFactory?: TrackerIdFactory
+  permissionDirectiveName?: string
+  autoRegisterDirective?: boolean
 
   [propName: string]: any
 }
@@ -529,6 +531,7 @@ export declare interface HappyKitSecurity {
    * 冷数据加载
    */
   loadFromStorage(): void
+
   /**
    * 热数据写入
    */
@@ -538,6 +541,7 @@ export declare interface HappyKitSecurity {
    * 清除存储
    */
   flushStorage(): void
+
   /**
    * vue插件
    * @param app

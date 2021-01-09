@@ -49,8 +49,8 @@ export function createEmptyMenuItem(): MenuItem {
     routerPath: '',
     menuPath: [],
     breadcrumb: [],
-    buttonList: [],
-    buttonsMap: new Map<string, MenuItem>(),
+    pointList: [],
+    pointsMap: new Map<string, MenuItem>(),
   }
 }
 
@@ -66,7 +66,7 @@ export function createDefaultMenuAdapter(): MenuAdapter<MenuItem> {
 
       const menuTypeMap: any = {
         menu: MenuType.MENU,
-        button: MenuType.BUTTON,
+        point: MenuType.POINT,
       }
 
       const linkTargetMap: any = {
@@ -134,8 +134,8 @@ export function createDefaultMenuAdapter(): MenuAdapter<MenuItem> {
                 btnNode.hide = e.hide || false
                 btnNode.isHome = e.isHome || false
                 btnNode.permissionKey = e.permissionKey || ''
-                treeNode.buttonList.push(btnNode)
-                treeNode.buttonsMap.set(btnNode.permissionKey, btnNode)
+                treeNode.pointList.push(btnNode)
+                treeNode.pointsMap.set(btnNode.permissionKey, btnNode)
               })
               if (!treeNode.externalLink || (treeNode.externalLink && treeNode.linkTarget === LinkTarget.TAB)) {
                 routeMappingList.push(treeNode)
