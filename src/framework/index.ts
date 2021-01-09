@@ -47,8 +47,8 @@ export function createHappyFramework(options?: HappyKitFrameworkOption): HappyKi
     install(app: App) {
       this.options.app = app
       app.config.globalProperties.$happykit = this
-      if (this.options.autoRegisterDirective){
-        this.options.app?.directive(this.options.permissionDirectiveName || 'point',permission)
+      if (this.options.autoRegisterDirective) {
+        this.options.app?.directive(this.options.permissionDirectiveName || 'point', permission)
       }
     },
     init(opts?: HappyKitFrameworkOption) {

@@ -1,4 +1,4 @@
-import { Directive,watch } from 'vue'
+import { Directive, watch } from 'vue'
 import { HappyKitFramework } from '../types'
 /**
  * dom级别权限控制指令
@@ -8,14 +8,14 @@ const permission: Directive = {
   // beforeMount() {
   //
   // },
-  mounted(el,binding) {
-    const instance =(binding.instance as any).$happykit as HappyKitFramework
-    if (!instance){
+  mounted(el, binding) {
+    const instance = (binding.instance as any).$happykit as HappyKitFramework
+    if (!instance) {
       throw Error('HappyKitFramework not register permission directive')
     }
     const current = instance.getCurrentMenuRoute()
-    const has = current.value?.menuItem.pointList.some(item=>item.permissionKey === binding.value)
-    if (!has){
+    const has = current.value?.menuItem.pointList.some((item) => item.permissionKey === binding.value)
+    if (!has) {
       el.parentNode.removeChild(el)
     }
   },
@@ -33,4 +33,3 @@ const permission: Directive = {
   // },
 }
 export default permission
-

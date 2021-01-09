@@ -1,5 +1,3 @@
 import Permission from './permission'
 
-export {
-  Permission
-}
+export { Permission }
