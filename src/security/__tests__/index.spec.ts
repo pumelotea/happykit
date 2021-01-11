@@ -1,3 +1,6 @@
+/**
+ * security test
+ */
 import { createHappySecurity } from '../index'
 import { createApp } from 'vue'
 import { HAPPYKIT_STORAGE, SECURITY_TOKEN, SECURITY_USER, StorageEngine } from '../../types'
