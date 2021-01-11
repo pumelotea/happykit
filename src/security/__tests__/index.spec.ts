@@ -1,5 +1,5 @@
 import { createHappySecurity } from '../index'
-import {createApp} from 'vue'
+import { createApp } from 'vue'
 import { HAPPYKIT_STORAGE, SECURITY_TOKEN, SECURITY_USER, StorageEngine } from '../../types'
 
 test('vue install', () => {
@@ -22,7 +22,7 @@ test('json parse error from storage', () => {
   const keyUser = `${HAPPYKIT_STORAGE}/${SECURITY_USER}`
   localStorage.setItem(keyUser, 'error')
 
-  expect(()=>{
+  expect(() => {
     instance.loadFromStorage()
   }).toThrowError(`Unexpected token e in JSON at position 0`)
 })
