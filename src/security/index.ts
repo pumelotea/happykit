@@ -37,7 +37,7 @@ export function createHappySecurity(options?: HappyKitSecurityOption): HappyKitS
       this.saveIntoStorage()
     },
     refreshUser(user: User) {
-      this.user = user
+      this.user.value = user
       this.saveIntoStorage()
     },
     signIn(token: string, user: User) {
