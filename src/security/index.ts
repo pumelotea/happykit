@@ -83,6 +83,4 @@ export function createHappySecurity(options?: HappyKitSecurityOption): HappyKitS
   }
   security.init(options)
   return security
-
-
 }

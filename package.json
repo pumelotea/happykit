@@ -40,9 +40,12 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "yarn lint && yarn format",
+      "pre-commit": "lint-staged",
       "commit-msg": "commitlint -e $HUSKY_GIT_PARAMS"
     }
+  },
+  "lint-staged": {
+    "src/**/*.ts": [ "tslint -p tsconfig.json","prettier --write \"src/**/*.ts\""]
   },
   "dependencies": {
     "axios": "^0.21.0",
@@ -58,6 +61,7 @@
     "@types/node": "^14.14.17",
     "husky": "^4.3.7",
     "jest": "^26.6.3",
+    "lint-staged": "^10.5.3",
     "prettier": "^2.2.1",
     "standard-version": "^4.4.0",
     "ts-jest": "^26.4.4",
