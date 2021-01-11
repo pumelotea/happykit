@@ -64,12 +64,8 @@ export function createHappySecurity(options?: HappyKitSecurityOption): HappyKitS
       this.token = this.getStorage().getItem(`${HAPPYKIT_STORAGE}/${SECURITY_TOKEN}`) || ''
       const userJSONString = this.getStorage().getItem(`${HAPPYKIT_STORAGE}/${SECURITY_USER}`)
       if (userJSONString) {
-        try {
-          const JSONObject = JSON.parse(userJSONString)
-          this.user.value = JSONObject as User
-        } catch (e) {
-          console.error('HappyKitSecurity.loadFromStorage', e)
-        }
+        const JSONObject = JSON.parse(userJSONString)
+        this.user.value = JSONObject as User
       }
     },
     saveIntoStorage() {

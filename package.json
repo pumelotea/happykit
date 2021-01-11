@@ -7,7 +7,7 @@
   "scripts": {
     "dev": "tsc -w --outDir ./example/src/lib",
     "build": "tsc",
-    "test": "jest",
+    "test": "jest --coverage",
     "format": "prettier --write \"src/**/*.ts\"",
     "lint": "tslint -p tsconfig.json",
     "copy": "cp -R lib/ example/src/lib/",
