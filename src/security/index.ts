@@ -79,7 +79,6 @@ export function createHappySecurity(options?: HappyKitSecurityOption): HappyKitS
     flushStorage() {
       this.getStorage().removeItem(`${HAPPYKIT_STORAGE}/${SECURITY_TOKEN}`)
       this.getStorage().removeItem(`${HAPPYKIT_STORAGE}/${SECURITY_USER}`)
-      console.log(123123123)
     },
   }
   security.init(options)
