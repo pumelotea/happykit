@@ -61,7 +61,6 @@ test('signIn&signOut', () => {
   expect(localStorage.getItem(keyUser)).toBe(null)
 })
 
-
 test('refreshToken', () => {
   const instance = createHappySecurity()
   instance.refreshToken('token3')
@@ -82,5 +81,4 @@ test('refreshUser', () => {
 
   const keyUser = `${HAPPYKIT_STORAGE}/${SECURITY_USER}`
   expect(localStorage.getItem(keyUser)).toBe('{"username":"username3","email":"test@test.com3"}')
-
 })
