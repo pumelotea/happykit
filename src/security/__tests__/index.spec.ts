@@ -60,3 +60,27 @@ test('signIn&signOut', () => {
   expect(localStorage.getItem(keyToken)).toBe(null)
   expect(localStorage.getItem(keyUser)).toBe(null)
 })
+
+
+test('refreshToken', () => {
+  const instance = createHappySecurity()
+  instance.refreshToken('token3')
+  expect(instance.getToken()).toBe('token3')
+
+  const keyToken = `${HAPPYKIT_STORAGE}/${SECURITY_TOKEN}`
+  expect(localStorage.getItem(keyToken)).toBe('token3')
+})
+
+test('refreshUser', () => {
+  const instance = createHappySecurity()
+  const user3 = {
+    username: 'username3',
+    email: 'test@test.com3',
+  }
+  instance.refreshUser(user3)
+  expect(instance.getUser().value).toStrictEqual(user3)
+
+  const keyUser = `${HAPPYKIT_STORAGE}/${SECURITY_USER}`
+  expect(localStorage.getItem(keyUser)).toBe('{"username":"username3","email":"test@test.com3"}')
+
+})
