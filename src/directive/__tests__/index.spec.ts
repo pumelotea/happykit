@@ -25,7 +25,7 @@ test('v-point directive', () => {
   })
   app.use(framework)
   app.mount(root)
-  expect(root.outerHTML).toBe(`<div data-v-app=''><div>content</div></div>`)
+  expect(root.outerHTML).toBe(`<div data-v-app=""><div>content</div></div>`)
 
   // 清空权限点
   node.pointsMap.clear()
@@ -36,5 +36,5 @@ test('v-point directive', () => {
   })
   app2.use(framework)
   app2.mount(root)
-  expect(root.outerHTML).toBe(`<div data-v-app=''></div>`)
+  expect(root.outerHTML).toBe(`<div data-v-app=""></div>`)
 })
