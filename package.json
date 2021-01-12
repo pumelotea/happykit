@@ -45,7 +45,10 @@
     }
   },
   "lint-staged": {
-    "src/**/*.ts": [ "tslint -p tsconfig.json","prettier --write \"src/**/*.ts\""]
+    "src/**/*.ts": [
+      "prettier --write \"src/**/*.ts\"",
+      "tslint -p tsconfig.json"
+    ]
   },
   "dependencies": {
     "axios": "^0.21.0",
