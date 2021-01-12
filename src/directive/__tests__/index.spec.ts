@@ -37,7 +37,4 @@ test('v-point directive', () => {
   app2.use(framework)
   app2.mount(root)
   expect(root.outerHTML).toBe(`<div data-v-app=''></div>`)
-
-  let a = []
-  console.log(a)
 })
