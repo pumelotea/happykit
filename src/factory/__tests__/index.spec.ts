@@ -1,3 +1,4 @@
 /**
  * factory test
  */
+let a = []
