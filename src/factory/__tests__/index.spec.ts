@@ -1,4 +1,3 @@
 /**
  * factory test
  */
-let a = []
