@@ -46,8 +46,8 @@
   },
   "lint-staged": {
     "src/**/*.ts": [
-      "prettier --write \"src/**/*.ts\"",
-      "tslint -p tsconfig.json"
+      "tslint",
+      "prettier --write \"src/**/*.ts\""
     ]
   },
   "dependencies": {
