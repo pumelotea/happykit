@@ -70,5 +70,6 @@
   "exclude": [
     "node_modules",
     "example",
+    "src/**/*.spec.ts"
   ]
 }

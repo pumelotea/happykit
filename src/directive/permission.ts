@@ -11,10 +11,11 @@ const permission: Directive = {
   mounted(el, binding) {
     const instance = (binding.instance as any).$happykit as HappyKitFramework
     if (!instance) {
-      throw Error('HappyKitFramework not register permission directive')
+      console.warn('HappyKitFramework not register permission directive')
+      return
     }
     const current = instance.getCurrentMenuRoute()
-    const has = current.value?.menuItem.pointList.some((item) => item.permissionKey === binding.value)
+    const has = current.value?.menuItem.pointsMap.has(binding.value)
     if (!has) {
       el.parentNode.removeChild(el)
     }

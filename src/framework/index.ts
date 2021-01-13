@@ -52,13 +52,15 @@ export function createHappyFramework(options?: HappyKitFrameworkOption): HappyKi
       }
     },
     init(opts?: HappyKitFrameworkOption) {
-      this.options = opts || {
-        menuAdapter: createDefaultMenuAdapter(),
-        pageIdFactory: createDefaultPageIdFactory(this),
-        trackerIdFactory: createDefaultTrackerIdFactory(this),
-        autoRegisterDirective: true,
-        permissionDirectiveName: 'point',
-      }
+      this.options.menuAdapter = createDefaultMenuAdapter()
+      this.options.pageIdFactory = createDefaultPageIdFactory(this)
+      this.options.trackerIdFactory = createDefaultTrackerIdFactory(this)
+      this.options.autoRegisterDirective = true
+      this.options.permissionDirectiveName = 'point'
+      // 自定义属性覆盖
+      Object.keys(opts || {}).forEach((key) => {
+        this.options[key] = opts![key]
+      })
       this.initTracker()
     },
     setMenuTree(rawData: any, dataAdapter?: MenuAdapter<MenuItem>) {
