@@ -3,7 +3,6 @@
  */
 import { createEmptyMenuItem, createHappyFramework } from '../../index'
 import { createApp } from 'vue'
-
 test('v-point directive', () => {
   const root = document.createElement('div')
   const framework = createHappyFramework()
@@ -37,4 +36,38 @@ test('v-point directive', () => {
   app2.use(framework)
   app2.mount(root)
   expect(root.outerHTML).toBe(`<div data-v-app=""></div>`)
+
+  const app3 = createApp({
+    template: `
+      <div v-point="'test_key'">content</div>
+    `,
+  })
+  framework.currentMenuRoute.value = null
+  app3.use(framework)
+  app3.mount(root)
+  expect(root.outerHTML).toBe(`<div data-v-app=""></div>`)
+})
+
+test('v-point directive custom name', () => {
+  const framework = createHappyFramework({
+    permissionDirectiveName: 'point_custom_name',
+  })
+  const app = createApp({})
+  app.use(framework)
+  const point = app.directive('point_custom_name')
+  expect(point).not.toBe(null)
+})
+
+test('framework is not install', () => {
+  const root = document.createElement('div')
+  const framework = createHappyFramework()
+  const app = createApp({
+    template: `
+      <div v-point="'test_key'">content</div>
+    `,
+  })
+  app.use(framework)
+  delete app.config.globalProperties.$happykit
+  app.mount(root)
+  expect('HappyKitFramework not register permission directive').toHaveBeenWarnedLast()
 })
