@@ -4,7 +4,7 @@
 import { createEmptyMenuItem, createHappyFramework } from '../../index'
 import { createApp } from 'vue'
 
-test('v-point directive on dom', () => {
+test('v-point directive', () => {
   const root = document.createElement('div')
   const framework = createHappyFramework()
   const node = createEmptyMenuItem()
