@@ -6,9 +6,9 @@
   "types": "lib/index.d.ts",
   "scripts": {
     "dev": "tsc -w --outDir ./example/src/lib",
-    "build": "tsc",
+    "build": "tsc -b tsconfig.build.json",
     "test": "jest --coverage",
-    "format": "prettier --write \"src/**/*.ts\"",
+    "format": "prettier --write src/**/*.ts",
     "lint": "tslint -p tsconfig.json",
     "copy": "cp -R lib/ example/src/lib/",
     "release": "standard-version",
@@ -46,8 +46,8 @@
   },
   "lint-staged": {
     "src/**/*.ts": [
-      "tslint",
-      "prettier --write \"src/**/*.ts\""
+      "tslint -p tsconfig.json",
+      "prettier --write src/**/*.ts"
     ]
   },
   "dependencies": {
