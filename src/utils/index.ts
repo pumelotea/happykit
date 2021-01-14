@@ -1,3 +1,6 @@
+/**
+ * UUID生成器
+ */
 export function uuid() {
   const s: any = []
   const hexDigits = '0123456789abcdef'
@@ -11,6 +14,10 @@ export function uuid() {
   return s.join('')
 }
 
+/**
+ * 深度拷贝
+ * @param source
+ */
 export function deepClone(source: any) {
   if (!source && typeof source !== 'object') {
     throw new Error('error arguments shallowClone')
