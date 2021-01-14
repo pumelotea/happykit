@@ -243,6 +243,9 @@ export function upgradeRouter(framework: HappyKitFramework, router: Router): Hap
     push(to: RouteLocationRaw, title?: string): Promise<NavigationFailure | void | undefined> {
       if (title) {
         const nextPageId = this.framework.options.pageIdFactory?.getNextPageId(to)
+        if (!nextPageId) {
+          throw Error('pageIdFactory is undefined')
+        }
         localStorage.setItem(`${HAPPYKIT_STORAGE}/${NAV_TITLE}/${nextPageId}`, title)
       }
       return router.push(to)
