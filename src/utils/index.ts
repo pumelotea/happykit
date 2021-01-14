@@ -29,3 +29,21 @@ export function deepClone(source: any) {
   }
   return targetObj
 }
+
+/**
+ * JSON转换增强
+ * 针对map的处理
+ * @param k
+ * @param v
+ */
+export const jsonReplacer = (k: string, v: any) => {
+  if (v instanceof Map) {
+    const obj: any = {}
+    v.forEach((value, key) => {
+      obj[key] = value
+    })
+    return obj
+  } else {
+    return v
+  }
+}
