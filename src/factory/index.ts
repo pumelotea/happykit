@@ -88,7 +88,7 @@ export function createDefaultMenuAdapter(): MenuAdapter<MenuItem> {
           treeNode.isRouter = tree[i].isRouter || false
           treeNode.isKeepalive = tree[i].isKeepalive || false
           treeNode.type = menuTypeMap[tree[i].type] || MenuType.MENU
-          treeNode.externalLink = tree[i].externalLink || ''
+          treeNode.externalLink = tree[i].externalLink || false
           treeNode.linkTarget = linkTargetMap[tree[i].externalLink] || LinkTarget.TAB
           treeNode.externalLinkAddress = tree[i].externalLinkAddress || ''
           treeNode.hide = tree[i].hide || false
@@ -127,8 +127,8 @@ export function createDefaultMenuAdapter(): MenuAdapter<MenuItem> {
                 btnNode.view = e.view || ''
                 btnNode.isRouter = e.isRouter || false
                 btnNode.isKeepalive = e.isKeepalive || false
-                btnNode.type = menuTypeMap[e.type] || MenuType.MENU
-                btnNode.externalLink = e.externalLink || ''
+                btnNode.type = menuTypeMap[e.type] || MenuType.POINT
+                btnNode.externalLink = e.externalLink || false
                 btnNode.linkTarget = linkTargetMap[e.externalLink] || LinkTarget.TAB
                 btnNode.externalLinkAddress = e.externalLinkAddress || ''
                 btnNode.hide = e.hide || false
