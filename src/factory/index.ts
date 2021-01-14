@@ -118,24 +118,24 @@ export function createDefaultMenuAdapter(): MenuAdapter<MenuItem> {
             if (!treeNode.isRouter) {
               forEachTree(tree[i].children, treeNode)
             } else {
-              // 收集按钮
+              // 收集权限点
               tree[i].children.forEach((e: any) => {
-                const btnNode = createEmptyMenuItem()
-                btnNode.menuId = uuid()
-                btnNode.name = e.name || ''
-                btnNode.path = e.path || ''
-                btnNode.view = e.view || ''
-                btnNode.isRouter = e.isRouter || false
-                btnNode.isKeepalive = e.isKeepalive || false
-                btnNode.type = menuTypeMap[e.type] || MenuType.POINT
-                btnNode.externalLink = e.externalLink || false
-                btnNode.linkTarget = linkTargetMap[e.externalLink] || LinkTarget.TAB
-                btnNode.externalLinkAddress = e.externalLinkAddress || ''
-                btnNode.hide = e.hide || false
-                btnNode.isHome = e.isHome || false
-                btnNode.permissionKey = e.permissionKey || ''
-                treeNode.pointList.push(btnNode)
-                treeNode.pointsMap.set(btnNode.permissionKey, btnNode)
+                const pointNode = createEmptyMenuItem()
+                pointNode.menuId = uuid()
+                pointNode.name = e.name || ''
+                pointNode.path = e.path || ''
+                pointNode.view = e.view || ''
+                pointNode.isRouter = e.isRouter || false
+                pointNode.isKeepalive = e.isKeepalive || false
+                pointNode.type = menuTypeMap[e.type] || MenuType.POINT
+                pointNode.externalLink = e.externalLink || false
+                pointNode.linkTarget = linkTargetMap[e.externalLink] || LinkTarget.TAB
+                pointNode.externalLinkAddress = e.externalLinkAddress || ''
+                pointNode.hide = e.hide || false
+                pointNode.isHome = e.isHome || false
+                pointNode.permissionKey = e.permissionKey || ''
+                treeNode.pointList.push(pointNode)
+                treeNode.pointsMap.set(pointNode.permissionKey, pointNode)
               })
               if (!treeNode.externalLink || (treeNode.externalLink && treeNode.linkTarget === LinkTarget.TAB)) {
                 routeMappingList.push(treeNode)
@@ -147,7 +147,7 @@ export function createDefaultMenuAdapter(): MenuAdapter<MenuItem> {
       forEachTree(menuTree as any[])
       return {
         routeMappingList,
-        menuTreeConverted: menuTreeConverted[0].children,
+        menuTreeConverted: menuTreeConverted[0]?.children || [],
         menuIdMappingMap,
       }
     },
@@ -261,7 +261,7 @@ export function createDefaultRouterInterceptor(options: RouterInterceptorOption)
   if (options.interceptorType === RouterInterceptorType.BEFORE) {
     return {
       options,
-      async filter(to, from, next) {
+      filter(to, from, next) {
         const framework = this.options.framework
         // console.log(
         //   'RouterInterceptor Before: ',
@@ -269,7 +269,7 @@ export function createDefaultRouterInterceptor(options: RouterInterceptorOption)
         // )
 
         if (!next) {
-          throw Error('RouterInterceptor:next is undefined')
+          throw new Error('RouterInterceptor:next is undefined')
         }
 
         // 首次初始化
@@ -296,12 +296,6 @@ export function createDefaultRouterInterceptor(options: RouterInterceptorOption)
           }
           // 初始化完成
           framework.routerInitiated = true
-          console.log(
-            `%c HappyKit %c Core Data Loaded %c`,
-            'background:#35495e ; padding: 1px; border-radius: 3px 0 0 3px;  color: #fff',
-            'background:#20a0ff ; padding: 1px; border-radius: 0 3px 3px 0;  color: #fff',
-            'background:transparent',
-          )
           // 跳转到目标路由
           // console.log(
           //   framework.options.app?.config.globalProperties.$router.getRoutes()
@@ -321,7 +315,7 @@ export function createDefaultRouterInterceptor(options: RouterInterceptorOption)
         }
         const res = framework.getRouteMappingList().value.filter((e) => e.menuId === menuId)
         if (res.length === 0) {
-          console.log('RouterInterceptor:MenuItem is not found, nav failed')
+          console.warn('RouterInterceptor:MenuItem is not found, nav failed')
           return
         }
         const menuItem = res[0]
@@ -335,7 +329,7 @@ export function createDefaultRouterInterceptor(options: RouterInterceptorOption)
     return {
       options,
       filter(to, from) {
-        console.log('RouterInterceptor After: ', `${from.path} ---> ${to.path}`)
+        console.warn('RouterInterceptor After: ', `${from.path} ---> ${to.path}`)
       },
     }
   }
