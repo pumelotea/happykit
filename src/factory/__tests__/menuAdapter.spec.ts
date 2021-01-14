@@ -1,0 +1,867 @@
+import { createDefaultMenuAdapter } from '../index'
+import { LinkTarget, MenuItem, MenuType } from '../../types'
+// remove menuId
+const jsonReplacerForTest = (k: string, v: any) => {
+  if (v instanceof Map) {
+    const obj: any = {}
+    v.forEach((value, key) => {
+      obj[key] = value
+    })
+    return obj
+  } else {
+    if (k === 'menuId') {
+      return ''
+    }
+    return v
+  }
+}
+describe('menuAdapter', () => {
+  test('menuAdapter convert singleMenuNode', () => {
+    const adapter = createDefaultMenuAdapter()
+
+    // 单节点
+    const singleMenuNode = [
+      {
+        name: 'name',
+        path: '/path',
+        icon: 'icon',
+        view: '/demo',
+        isRouter: true,
+        isKeepalive: true,
+        type: 'menu',
+        children: [],
+      },
+    ]
+
+    const { routeMappingList, menuTreeConverted, menuIdMappingMap } = adapter.convert(singleMenuNode)
+
+    const shouldConverted: MenuItem[] = [
+      {
+        menuId: '',
+        name: 'name',
+        icon: 'icon',
+        path: '/path',
+        view: '/demo',
+        isRouter: true,
+        isKeepalive: true,
+        type: MenuType.MENU,
+        externalLink: false,
+        linkTarget: LinkTarget.TAB,
+        externalLinkAddress: '',
+        hide: false,
+        isHome: false,
+        permissionKey: '',
+        children: [],
+        routerPath: '/path',
+        menuPath: [
+          {
+            menuId: '',
+            name: 'name',
+            icon: 'icon',
+            path: '/path',
+            view: '/demo',
+            isRouter: true,
+            isKeepalive: true,
+            type: MenuType.MENU,
+            externalLink: false,
+            linkTarget: LinkTarget.TAB,
+            externalLinkAddress: '',
+            hide: false,
+            isHome: false,
+            permissionKey: '',
+            children: [],
+            routerPath: '/path',
+            menuPath: [],
+            breadcrumb: [],
+            pointList: [],
+            pointsMap: new Map<string, MenuItem>(),
+          },
+        ],
+        breadcrumb: [
+          {
+            menuId: '',
+            name: 'name',
+            icon: 'icon',
+            path: '/path',
+            view: '/demo',
+            isRouter: true,
+            isKeepalive: true,
+            type: MenuType.MENU,
+            externalLink: false,
+            linkTarget: LinkTarget.TAB,
+            externalLinkAddress: '',
+            hide: false,
+            isHome: false,
+            permissionKey: '',
+            children: [],
+            routerPath: '/path',
+            menuPath: [],
+            breadcrumb: [],
+            pointList: [],
+            pointsMap: new Map<string, MenuItem>(),
+          },
+        ],
+        pointList: [],
+        pointsMap: new Map<string, MenuItem>(),
+      },
+    ]
+    expect(JSON.stringify(menuTreeConverted, jsonReplacerForTest)).toStrictEqual(
+      JSON.stringify(shouldConverted, jsonReplacerForTest),
+    )
+  })
+
+  test('menuAdapter convert externalLinkAddress singleMenuNode', () => {
+    const adapter = createDefaultMenuAdapter()
+
+    // 单节点
+    const singleMenuNode = [
+      {
+        name: 'name',
+        path: '/path',
+        icon: 'icon',
+        view: '/demo',
+        isRouter: true,
+        linkTarget: '_tab',
+        externalLink: true,
+        externalLinkAddress: 'https://happykit.org',
+        isKeepalive: true,
+        type: 'menu',
+        children: [],
+      },
+    ]
+
+    const { routeMappingList, menuTreeConverted, menuIdMappingMap } = adapter.convert(singleMenuNode)
+
+    const shouldConverted: MenuItem[] = [
+      {
+        menuId: '',
+        name: 'name',
+        icon: 'icon',
+        path: '/path',
+        view: '/demo',
+        isRouter: true,
+        isKeepalive: true,
+        type: MenuType.MENU,
+        externalLink: true,
+        linkTarget: LinkTarget.TAB,
+        externalLinkAddress: 'https://happykit.org',
+        hide: false,
+        isHome: false,
+        permissionKey: '',
+        children: [],
+        routerPath: '/path',
+        menuPath: [
+          {
+            menuId: '',
+            name: 'name',
+            icon: 'icon',
+            path: '/path',
+            view: '/demo',
+            isRouter: true,
+            isKeepalive: true,
+            type: MenuType.MENU,
+            externalLink: true,
+            linkTarget: LinkTarget.TAB,
+            externalLinkAddress: 'https://happykit.org',
+            hide: false,
+            isHome: false,
+            permissionKey: '',
+            children: [],
+            routerPath: '/path',
+            menuPath: [],
+            breadcrumb: [],
+            pointList: [],
+            pointsMap: new Map<string, MenuItem>(),
+          },
+        ],
+        breadcrumb: [
+          {
+            menuId: '',
+            name: 'name',
+            icon: 'icon',
+            path: '/path',
+            view: '/demo',
+            isRouter: true,
+            isKeepalive: true,
+            type: MenuType.MENU,
+            externalLink: true,
+            linkTarget: LinkTarget.TAB,
+            externalLinkAddress: 'https://happykit.org',
+            hide: false,
+            isHome: false,
+            permissionKey: '',
+            children: [],
+            routerPath: '/path',
+            menuPath: [],
+            breadcrumb: [],
+            pointList: [],
+            pointsMap: new Map<string, MenuItem>(),
+          },
+        ],
+        pointList: [],
+        pointsMap: new Map<string, MenuItem>(),
+      },
+    ]
+    expect(JSON.stringify(menuTreeConverted, jsonReplacerForTest)).toStrictEqual(
+      JSON.stringify(shouldConverted, jsonReplacerForTest),
+    )
+  })
+
+  test('menuAdapter convert singleMenuNode empty', () => {
+    const adapter = createDefaultMenuAdapter()
+
+    // 单节点
+    const singleMenuNode = [
+      {
+        children: [],
+      },
+    ]
+    const { routeMappingList, menuTreeConverted, menuIdMappingMap } = adapter.convert(singleMenuNode)
+
+    const shouldConverted: MenuItem[] = [
+      {
+        menuId: '',
+        name: '',
+        icon: '',
+        path: '',
+        view: '',
+        isRouter: false,
+        isKeepalive: false,
+        type: MenuType.MENU,
+        externalLink: false,
+        linkTarget: LinkTarget.TAB,
+        externalLinkAddress: '',
+        hide: false,
+        isHome: false,
+        permissionKey: '',
+        children: [],
+        routerPath: '',
+        menuPath: [
+          {
+            menuId: '',
+            name: '',
+            icon: '',
+            path: '',
+            view: '',
+            isRouter: false,
+            isKeepalive: false,
+            type: MenuType.MENU,
+            externalLink: false,
+            linkTarget: LinkTarget.TAB,
+            externalLinkAddress: '',
+            hide: false,
+            isHome: false,
+            permissionKey: '',
+            children: [],
+            routerPath: '',
+            menuPath: [],
+            breadcrumb: [],
+            pointList: [],
+            pointsMap: new Map<string, MenuItem>(),
+          },
+        ],
+        breadcrumb: [
+          {
+            menuId: '',
+            name: '',
+            icon: '',
+            path: '',
+            view: '',
+            isRouter: false,
+            isKeepalive: false,
+            type: MenuType.MENU,
+            externalLink: false,
+            linkTarget: LinkTarget.TAB,
+            externalLinkAddress: '',
+            hide: false,
+            isHome: false,
+            permissionKey: '',
+            children: [],
+            routerPath: '',
+            menuPath: [],
+            breadcrumb: [],
+            pointList: [],
+            pointsMap: new Map<string, MenuItem>(),
+          },
+        ],
+        pointList: [],
+        pointsMap: new Map<string, MenuItem>(),
+      },
+    ]
+    expect(JSON.stringify(menuTreeConverted, jsonReplacerForTest)).toStrictEqual(
+      JSON.stringify(shouldConverted, jsonReplacerForTest),
+    )
+  })
+
+  test('menuAdapter convert singleMenuNode width points', () => {
+    const adapter = createDefaultMenuAdapter()
+
+    // 单节点
+    const singleMenuNode = [
+      {
+        name: 'name',
+        path: '/path',
+        icon: 'icon',
+        view: '/demo',
+        isRouter: true,
+        isKeepalive: true,
+        type: 'menu',
+        children: [
+          {
+            name: 'point1',
+            permissionKey: 'point1',
+            path: '',
+            view: '',
+            isRouter: false,
+            isKeepalive: false,
+            type: 'point',
+            children: [],
+          },
+          {
+            name: 'point2',
+            permissionKey: 'point2',
+            path: '',
+            view: '',
+            isRouter: false,
+            isKeepalive: false,
+            type: 'point',
+            children: [],
+          },
+        ],
+      },
+    ]
+
+    const { routeMappingList, menuTreeConverted, menuIdMappingMap } = adapter.convert(singleMenuNode)
+
+    const shouldConverted: MenuItem[] = [
+      {
+        menuId: '',
+        name: 'name',
+        icon: 'icon',
+        path: '/path',
+        view: '/demo',
+        isRouter: true,
+        isKeepalive: true,
+        type: MenuType.MENU,
+        externalLink: false,
+        linkTarget: LinkTarget.TAB,
+        externalLinkAddress: '',
+        hide: false,
+        isHome: false,
+        permissionKey: '',
+        children: [],
+        routerPath: '/path',
+        menuPath: [
+          {
+            menuId: '',
+            name: 'name',
+            icon: 'icon',
+            path: '/path',
+            view: '/demo',
+            isRouter: true,
+            isKeepalive: true,
+            type: MenuType.MENU,
+            externalLink: false,
+            linkTarget: LinkTarget.TAB,
+            externalLinkAddress: '',
+            hide: false,
+            isHome: false,
+            permissionKey: '',
+            children: [],
+            routerPath: '/path',
+            menuPath: [],
+            breadcrumb: [],
+            pointList: [],
+            pointsMap: new Map<string, MenuItem>(),
+          },
+        ],
+        breadcrumb: [
+          {
+            menuId: '',
+            name: 'name',
+            icon: 'icon',
+            path: '/path',
+            view: '/demo',
+            isRouter: true,
+            isKeepalive: true,
+            type: MenuType.MENU,
+            externalLink: false,
+            linkTarget: LinkTarget.TAB,
+            externalLinkAddress: '',
+            hide: false,
+            isHome: false,
+            permissionKey: '',
+            children: [],
+            routerPath: '/path',
+            menuPath: [],
+            breadcrumb: [],
+            pointList: [],
+            pointsMap: new Map<string, MenuItem>(),
+          },
+        ],
+        pointList: [
+          {
+            menuId: '',
+            name: 'point1',
+            icon: '',
+            path: '',
+            view: '',
+            isRouter: false,
+            isKeepalive: false,
+            type: MenuType.POINT,
+            externalLink: false,
+            linkTarget: LinkTarget.TAB,
+            externalLinkAddress: '',
+            hide: false,
+            isHome: false,
+            permissionKey: 'point1',
+            children: [],
+            routerPath: '',
+            menuPath: [],
+            breadcrumb: [],
+            pointList: [],
+            pointsMap: new Map<string, MenuItem>(),
+          },
+          {
+            menuId: '',
+            name: 'point2',
+            icon: '',
+            path: '',
+            view: '',
+            isRouter: false,
+            isKeepalive: false,
+            type: MenuType.POINT,
+            externalLink: false,
+            linkTarget: LinkTarget.TAB,
+            externalLinkAddress: '',
+            hide: false,
+            isHome: false,
+            permissionKey: 'point2',
+            children: [],
+            routerPath: '',
+            menuPath: [],
+            breadcrumb: [],
+            pointList: [],
+            pointsMap: new Map<string, MenuItem>(),
+          },
+        ],
+        pointsMap: new Map<string, MenuItem>(),
+      },
+    ]
+    shouldConverted[0].pointsMap.set('point1', {
+      menuId: '',
+      name: 'point1',
+      icon: '',
+      path: '',
+      view: '',
+      isRouter: false,
+      isKeepalive: false,
+      type: MenuType.POINT,
+      externalLink: false,
+      linkTarget: LinkTarget.TAB,
+      externalLinkAddress: '',
+      hide: false,
+      isHome: false,
+      permissionKey: 'point1',
+      children: [],
+      routerPath: '',
+      menuPath: [],
+      breadcrumb: [],
+      pointList: [],
+      pointsMap: new Map<string, MenuItem>(),
+    })
+    shouldConverted[0].pointsMap.set('point2', {
+      menuId: '',
+      name: 'point2',
+      icon: '',
+      path: '',
+      view: '',
+      isRouter: false,
+      isKeepalive: false,
+      type: MenuType.POINT,
+      externalLink: false,
+      linkTarget: LinkTarget.TAB,
+      externalLinkAddress: '',
+      hide: false,
+      isHome: false,
+      permissionKey: 'point2',
+      children: [],
+      routerPath: '',
+      menuPath: [],
+      breadcrumb: [],
+      pointList: [],
+      pointsMap: new Map<string, MenuItem>(),
+    })
+    expect(JSON.stringify(menuTreeConverted, jsonReplacerForTest)).toStrictEqual(
+      JSON.stringify(shouldConverted, jsonReplacerForTest),
+    )
+  })
+
+  test('menuAdapter convert nestMenuNode', () => {
+    const adapter = createDefaultMenuAdapter()
+
+    // 嵌套节点
+    const nestMenuNode = [
+      {
+        name: 'name',
+        path: '/path',
+        icon: 'icon',
+        view: '/demo',
+        isRouter: false,
+        isKeepalive: false,
+        type: 'menu',
+        children: [
+          {
+            name: 'name1',
+            path: '/path1',
+            icon: 'icon1',
+            view: '/demo1',
+            isRouter: true,
+            isKeepalive: true,
+            type: 'menu',
+            children: [],
+          },
+        ],
+      },
+    ]
+
+    const { routeMappingList, menuTreeConverted, menuIdMappingMap } = adapter.convert(nestMenuNode)
+
+    const shouldConverted: MenuItem[] = [
+      {
+        menuId: '',
+        name: 'name',
+        icon: 'icon',
+        path: '/path',
+        view: '/demo',
+        isRouter: false,
+        isKeepalive: false,
+        type: MenuType.MENU,
+        externalLink: false,
+        linkTarget: LinkTarget.TAB,
+        externalLinkAddress: '',
+        hide: false,
+        isHome: false,
+        permissionKey: '',
+        children: [
+          {
+            menuId: '',
+            name: 'name1',
+            icon: 'icon1',
+            path: '/path1',
+            view: '/demo1',
+            isRouter: true,
+            isKeepalive: true,
+            type: MenuType.MENU,
+            externalLink: false,
+            linkTarget: LinkTarget.TAB,
+            externalLinkAddress: '',
+            hide: false,
+            isHome: false,
+            permissionKey: '',
+            children: [],
+            routerPath: '/path/path1',
+            menuPath: [
+              {
+                menuId: '',
+                name: 'name',
+                icon: 'icon',
+                path: '/path',
+                view: '/demo',
+                isRouter: false,
+                isKeepalive: false,
+                type: MenuType.MENU,
+                externalLink: false,
+                linkTarget: LinkTarget.TAB,
+                externalLinkAddress: '',
+                hide: false,
+                isHome: false,
+                permissionKey: '',
+                children: [],
+                routerPath: '/path',
+                menuPath: [],
+                breadcrumb: [],
+                pointList: [],
+                pointsMap: new Map<string, MenuItem>(),
+              },
+              {
+                menuId: '',
+                name: 'name1',
+                icon: 'icon1',
+                path: '/path1',
+                view: '/demo1',
+                isRouter: true,
+                isKeepalive: true,
+                type: MenuType.MENU,
+                externalLink: false,
+                linkTarget: LinkTarget.TAB,
+                externalLinkAddress: '',
+                hide: false,
+                isHome: false,
+                permissionKey: '',
+                children: [],
+                routerPath: '/path/path1',
+                menuPath: [],
+                breadcrumb: [],
+                pointList: [],
+                pointsMap: new Map<string, MenuItem>(),
+              },
+            ],
+            breadcrumb: [
+              {
+                menuId: '',
+                name: 'name',
+                icon: 'icon',
+                path: '/path',
+                view: '/demo',
+                isRouter: false,
+                isKeepalive: false,
+                type: MenuType.MENU,
+                externalLink: false,
+                linkTarget: LinkTarget.TAB,
+                externalLinkAddress: '',
+                hide: false,
+                isHome: false,
+                permissionKey: '',
+                children: [],
+                routerPath: '/path',
+                menuPath: [],
+                breadcrumb: [],
+                pointList: [],
+                pointsMap: new Map<string, MenuItem>(),
+              },
+              {
+                menuId: '',
+                name: 'name1',
+                icon: 'icon1',
+                path: '/path1',
+                view: '/demo1',
+                isRouter: true,
+                isKeepalive: true,
+                type: MenuType.MENU,
+                externalLink: false,
+                linkTarget: LinkTarget.TAB,
+                externalLinkAddress: '',
+                hide: false,
+                isHome: false,
+                permissionKey: '',
+                children: [],
+                routerPath: '/path/path1',
+                menuPath: [],
+                breadcrumb: [],
+                pointList: [],
+                pointsMap: new Map<string, MenuItem>(),
+              },
+            ],
+            pointList: [],
+            pointsMap: new Map<string, MenuItem>(),
+          },
+        ],
+        routerPath: '/path',
+        menuPath: [
+          {
+            menuId: '',
+            name: 'name',
+            icon: 'icon',
+            path: '/path',
+            view: '/demo',
+            isRouter: false,
+            isKeepalive: false,
+            type: MenuType.MENU,
+            externalLink: false,
+            linkTarget: LinkTarget.TAB,
+            externalLinkAddress: '',
+            hide: false,
+            isHome: false,
+            permissionKey: '',
+            children: [],
+            routerPath: '/path',
+            menuPath: [],
+            breadcrumb: [],
+            pointList: [],
+            pointsMap: new Map<string, MenuItem>(),
+          },
+        ],
+        breadcrumb: [
+          {
+            menuId: '',
+            name: 'name',
+            icon: 'icon',
+            path: '/path',
+            view: '/demo',
+            isRouter: false,
+            isKeepalive: false,
+            type: MenuType.MENU,
+            externalLink: false,
+            linkTarget: LinkTarget.TAB,
+            externalLinkAddress: '',
+            hide: false,
+            isHome: false,
+            permissionKey: '',
+            children: [],
+            routerPath: '/path',
+            menuPath: [],
+            breadcrumb: [],
+            pointList: [],
+            pointsMap: new Map<string, MenuItem>(),
+          },
+        ],
+        pointList: [],
+        pointsMap: new Map<string, MenuItem>(),
+      },
+    ]
+
+    expect(JSON.stringify(menuTreeConverted, jsonReplacerForTest)).toStrictEqual(
+      JSON.stringify(shouldConverted, jsonReplacerForTest),
+    )
+  })
+
+  test('menuAdapter convert bad point nestMenuNode', () => {
+    const adapter = createDefaultMenuAdapter()
+
+    // 嵌套节点 包含不完整的坏节点
+    const nestMenuNode = [
+      {
+        name: 'name',
+        path: '/path',
+        icon: 'icon',
+        view: '/demo',
+        isRouter: true,
+        isKeepalive: false,
+        type: 'menu',
+        children: [
+          {
+            name: '',
+            path: '',
+            icon: '',
+            view: '',
+            children: [],
+          },
+        ],
+      },
+    ]
+
+    const { routeMappingList, menuTreeConverted, menuIdMappingMap } = adapter.convert(nestMenuNode)
+
+    const shouldConverted: MenuItem[] = [
+      {
+        menuId: '',
+        name: 'name',
+        icon: 'icon',
+        path: '/path',
+        view: '/demo',
+        isRouter: true,
+        isKeepalive: false,
+        type: MenuType.MENU,
+        externalLink: false,
+        linkTarget: LinkTarget.TAB,
+        externalLinkAddress: '',
+        hide: false,
+        isHome: false,
+        permissionKey: '',
+        children: [],
+        routerPath: '/path',
+        menuPath: [
+          {
+            menuId: '',
+            name: 'name',
+            icon: 'icon',
+            path: '/path',
+            view: '/demo',
+            isRouter: true,
+            isKeepalive: false,
+            type: MenuType.MENU,
+            externalLink: false,
+            linkTarget: LinkTarget.TAB,
+            externalLinkAddress: '',
+            hide: false,
+            isHome: false,
+            permissionKey: '',
+            children: [],
+            routerPath: '/path',
+            menuPath: [],
+            breadcrumb: [],
+            pointList: [],
+            pointsMap: new Map<string, MenuItem>(),
+          },
+        ],
+        breadcrumb: [
+          {
+            menuId: '',
+            name: 'name',
+            icon: 'icon',
+            path: '/path',
+            view: '/demo',
+            isRouter: true,
+            isKeepalive: false,
+            type: MenuType.MENU,
+            externalLink: false,
+            linkTarget: LinkTarget.TAB,
+            externalLinkAddress: '',
+            hide: false,
+            isHome: false,
+            permissionKey: '',
+            children: [],
+            routerPath: '/path',
+            menuPath: [],
+            breadcrumb: [],
+            pointList: [],
+            pointsMap: new Map<string, MenuItem>(),
+          },
+        ],
+        pointList: [
+          {
+            menuId: '',
+            name: '',
+            icon: '',
+            path: '',
+            view: '',
+            isRouter: false,
+            isKeepalive: false,
+            type: MenuType.POINT,
+            externalLink: false,
+            linkTarget: LinkTarget.TAB,
+            externalLinkAddress: '',
+            hide: false,
+            isHome: false,
+            permissionKey: '',
+            children: [],
+            routerPath: '',
+            menuPath: [],
+            breadcrumb: [],
+            pointList: [],
+            pointsMap: new Map<string, MenuItem>(),
+          },
+        ],
+        pointsMap: new Map<string, MenuItem>(),
+      },
+    ]
+
+    shouldConverted[0].pointsMap.set('', {
+      menuId: '',
+      name: '',
+      icon: '',
+      path: '',
+      view: '',
+      isRouter: false,
+      isKeepalive: false,
+      type: MenuType.POINT,
+      externalLink: false,
+      linkTarget: LinkTarget.TAB,
+      externalLinkAddress: '',
+      hide: false,
+      isHome: false,
+      permissionKey: '',
+      children: [],
+      routerPath: '',
+      menuPath: [],
+      breadcrumb: [],
+      pointList: [],
+      pointsMap: new Map<string, MenuItem>(),
+    })
+
+    expect(JSON.stringify(menuTreeConverted, jsonReplacerForTest)).toStrictEqual(
+      JSON.stringify(shouldConverted, jsonReplacerForTest),
+    )
+  })
+})

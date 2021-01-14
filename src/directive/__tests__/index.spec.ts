@@ -3,6 +3,7 @@
  */
 import { createEmptyMenuItem, createHappyFramework } from '../../index'
 import { createApp } from 'vue'
+
 test('v-point directive', () => {
   const root = document.createElement('div')
   const framework = createHappyFramework()
@@ -24,7 +25,7 @@ test('v-point directive', () => {
   })
   app.use(framework)
   app.mount(root)
-  expect(root.outerHTML).toBe(`<div data-v-app=""><div>content</div></div>`)
+  expect(root.outerHTML).toBe('<div data-v-app=""><div>content</div></div>')
 
   // 清空权限点
   node.pointsMap.clear()
@@ -35,7 +36,7 @@ test('v-point directive', () => {
   })
   app2.use(framework)
   app2.mount(root)
-  expect(root.outerHTML).toBe(`<div data-v-app=""></div>`)
+  expect(root.outerHTML).toBe('<div data-v-app=""></div>')
 
   const app3 = createApp({
     template: `
@@ -45,7 +46,7 @@ test('v-point directive', () => {
   framework.currentMenuRoute.value = null
   app3.use(framework)
   app3.mount(root)
-  expect(root.outerHTML).toBe(`<div data-v-app=""></div>`)
+  expect(root.outerHTML).toBe('<div data-v-app=""></div>')
 })
 
 test('v-point directive custom name', () => {

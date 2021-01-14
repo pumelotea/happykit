@@ -1,3 +1,6 @@
+/**
+ * UUID生成器
+ */
 export function uuid() {
   const s: any = []
   const hexDigits = '0123456789abcdef'
@@ -11,6 +14,10 @@ export function uuid() {
   return s.join('')
 }
 
+/**
+ * 深度拷贝
+ * @param source
+ */
 export function deepClone(source: any) {
   if (!source && typeof source !== 'object') {
     throw new Error('error arguments shallowClone')
@@ -28,4 +35,22 @@ export function deepClone(source: any) {
     }
   }
   return targetObj
+}
+
+/**
+ * JSON转换增强
+ * 针对map的处理
+ * @param k
+ * @param v
+ */
+export const jsonReplacer = (k: string, v: any) => {
+  if (v instanceof Map) {
+    const obj: any = {}
+    v.forEach((value, key) => {
+      obj[key] = value
+    })
+    return obj
+  } else {
+    return v
+  }
 }
