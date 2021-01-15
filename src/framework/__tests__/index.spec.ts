@@ -338,7 +338,7 @@ test('happyFramework member methods', async () => {
   framework.navigatorList.value = [navItemFromMenu, navItem4, navItem5, navItem6]
   // current => /path
   // navList => /path /path?id=4  /path?id=5  /path?id=6
-  // close => /path
+  // close => /path?id=7
   framework.closeNav(NavCloseType.LEFT, ider('/path?id=7'))
   expect(framework.currentMenuRoute.value).toStrictEqual(null)
   expect(framework.navigatorList.value).toStrictEqual([navItemFromMenu, navItem4, navItem5, navItem6])
@@ -348,7 +348,7 @@ test('happyFramework member methods', async () => {
   framework.navigatorList.value = [navItemFromMenu, navItem4, navItem5, navItem6]
   // current => /path
   // navList => /path /path?id=4  /path?id=5  /path?id=6
-  // close => /path
+  // close => /path?id=7
   framework.closeNav(NavCloseType.RIGHT, ider('/path?id=7'))
   expect(framework.currentMenuRoute.value).toStrictEqual(null)
   expect(framework.navigatorList.value).toStrictEqual([navItemFromMenu, navItem4, navItem5, navItem6])
@@ -358,7 +358,7 @@ test('happyFramework member methods', async () => {
   framework.navigatorList.value = [navItemFromMenu, navItem4, navItem5, navItem6]
   // current => /path
   // navList => /path /path?id=4  /path?id=5  /path?id=6
-  // close => /path
+  // close => /path?id=7
   framework.closeNav(NavCloseType.OTHER, ider('/path?id=7'))
   expect(framework.currentMenuRoute.value).toStrictEqual(null)
   expect(framework.navigatorList.value).toStrictEqual([navItemFromMenu, navItem4, navItem5, navItem6])
