@@ -48,7 +48,7 @@ export function createHappyFramework(options?: HappyKitFrameworkOption): HappyKi
       this.options.app = app
       app.config.globalProperties.$happykit = this
       if (this.options.autoRegisterDirective) {
-        this.options.app?.directive(this.options.permissionDirectiveName || 'point', permission)
+        this.options.app.directive(this.options.permissionDirectiveName || 'point', permission)
       }
     },
     init(opts?: HappyKitFrameworkOption) {
@@ -98,11 +98,11 @@ export function createHappyFramework(options?: HappyKitFrameworkOption): HappyKi
         return this.currentMenuRoute.value.menuItem.breadcrumb
       }
       // 正常传递pageId的情况会根据pageId查找对应的菜单的面包屑
-      const menuItems = this.navigatorList.value.filter((e) => e.pageId === pageId)
-      if (menuItems.length === 0) {
+      const navItems = this.navigatorList.value.filter((e) => e.pageId === pageId)
+      if (navItems.length === 0) {
         return []
       }
-      return menuItems[0].menuItem.breadcrumb
+      return navItems[0].menuItem.breadcrumb
     },
     getTracker() {
       return this.tracker
@@ -115,7 +115,7 @@ export function createHappyFramework(options?: HappyKitFrameworkOption): HappyKi
       if (!this.options.trackerIdFactory) {
         throw Error('TrackerIdFactory is undefined')
       }
-      const id = this.options.trackerIdFactory?.getId()
+      const id = this.options.trackerIdFactory.getId()
       this.tracker.clientId = id
       // 持久化
       localStorage.setItem('clientId', id)
