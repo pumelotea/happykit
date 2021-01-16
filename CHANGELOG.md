@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="1.1.0"></a>
+# [1.1.0](https://github.com/pumelotea/happykit/compare/v1.0.6...v1.1.0) (2021-01-16)
+
+
+### Bug Fixes
+
+* 小量优化和改进 ([#18](https://github.com/pumelotea/happykit/issues/18)) ([8d01e41](https://github.com/pumelotea/happykit/commit/8d01e41))
+
+
+### Features
+
+* 新增v-point权限指令 ([#10](https://github.com/pumelotea/happykit/issues/10)) ([f0e2798](https://github.com/pumelotea/happykit/commit/f0e2798))
+
+
+
 <a name="1.0.6"></a>
 ## [1.0.6](https://github.com/pumelotea/happykit/compare/v1.0.5...v1.0.6) (2021-01-07)
 新增安全框架，用于管理用户登录状态，用户token，支持存储引擎切换
