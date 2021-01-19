@@ -231,6 +231,36 @@ export function injectRoutes(options: RouterInjectOption) {
 }
 
 /**
+ * 移除路由
+ * @param router
+ */
+export function removeRoutes(router: Router) {
+  router.getRoutes().forEach((e) => {
+    if (e.name && e.meta._source === HAPPYKIT_INJECT) {
+      router.removeRoute(e.name)
+    }
+  })
+}
+
+/**
+ * 默认的重置框架方法
+ * 并不是销毁框架
+ * @param framework
+ */
+export function resetFramework(framework: HappyKitFramework) {
+  framework.navigatorList.value = []
+  framework.currentMenuRoute.value = null
+  framework.menuTree.value = []
+  framework.menuIdMappingMap.value.clear()
+  framework.routerInitiated = false
+  framework.routeMappingList.value = []
+  // 尝试移除路由
+  if (framework.options.app?.config.globalProperties.$router) {
+    removeRoutes(framework.options.app?.config.globalProperties.$router)
+  }
+}
+
+/**
  * 路由升级
  * vue-router升级为HappyKitRouter
  * @param router
