@@ -27,6 +27,7 @@ import {
   RouterInterceptor,
   HappyKitRouter,
   TrackerIdFactory,
+  DataLoadResult,
 } from './types'
 import { createHappyFramework } from './framework'
 import { createHappySecurity } from './security'
@@ -72,6 +73,7 @@ export {
   RouterInterceptor,
   HappyKitRouter,
   TrackerIdFactory,
+  DataLoadResult,
   createHappyFramework,
   createHappySecurity,
   createEmptyMenuItem,
