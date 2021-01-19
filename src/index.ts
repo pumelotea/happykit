@@ -38,6 +38,8 @@ import {
   upgradeRouter,
   createDefaultRouterInterceptor,
   createDefaultTrackerIdFactory,
+  resetFramework,
+  removeRoutes,
 } from './factory'
 import { Permission } from './directive'
 
@@ -80,4 +82,6 @@ export {
   createDefaultRouterInterceptor,
   createDefaultTrackerIdFactory,
   Permission,
+  resetFramework,
+  removeRoutes,
 }
