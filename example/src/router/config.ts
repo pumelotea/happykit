@@ -10,12 +10,12 @@ import routerData from '@/routerData'
 const beforeInterceptor = createDefaultRouterInterceptor({
   interceptorType:RouterInterceptorType.BEFORE,
   framework:happyFramework,
-  dataLoader(){
+  async dataLoader(){
     // 实际开发环境应该从服务端拉取数据
     // 同时应该根据实际的数据结构进行编写对应的适配器
     // 同时应该自行处理好请求失败等情况
     return {
-      rawData:routerData
+      rawData: await new Promise(resolve => {resolve(routerData)})
     }
   },
   dataLoadFailureHandler(){
