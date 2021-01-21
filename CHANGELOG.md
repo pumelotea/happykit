@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="1.3.0"></a>
+# [1.3.0](https://github.com/pumelotea/happykit/compare/v1.2.2...v1.3.0) (2021-01-21)
+
+
+### Features
+
+* **factory:** 新增dataLoader支持传入路由守卫的参数 ([#25](https://github.com/pumelotea/happykit/issues/25)) ([5425df2](https://github.com/pumelotea/happykit/commit/5425df2))
+
+
+
 <a name="1.2.2"></a>
 ## [1.2.2](https://github.com/pumelotea/happykit/compare/v1.2.1...v1.2.2) (2021-01-21)
 
