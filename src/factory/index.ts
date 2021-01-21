@@ -309,7 +309,7 @@ export function createDefaultRouterInterceptor(options: RouterInterceptorOption)
           }
 
           // 请求数据
-          const result = await this.options.dataLoader()
+          const result = await this.options.dataLoader(to, from, next)
           // 初始化失败
           if (!result.rawData) {
             this.options.dataLoadFailureHandler?.(result, to, from, next)

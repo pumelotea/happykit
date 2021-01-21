@@ -417,7 +417,11 @@ export declare interface RouterInterceptorOption {
   /**
    * 数据加载器
    */
-  dataLoader?(): DataLoadResult | Promise<DataLoadResult>
+  dataLoader?(
+    to?: RouteLocationNormalized,
+    from?: RouteLocationNormalized,
+    next?: NavigationGuardNext,
+  ): DataLoadResult | Promise<DataLoadResult>
 
   /**
    * 数据加载失败回调
