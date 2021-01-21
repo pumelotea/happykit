@@ -291,7 +291,7 @@ export function createDefaultRouterInterceptor(options: RouterInterceptorOption)
   if (options.interceptorType === RouterInterceptorType.BEFORE) {
     return {
       options,
-      filter(to, from, next) {
+      async filter(to, from, next) {
         const framework = this.options.framework
         // console.log(
         //   'RouterInterceptor Before: ',
@@ -309,7 +309,7 @@ export function createDefaultRouterInterceptor(options: RouterInterceptorOption)
           }
 
           // 请求数据
-          const result = this.options.dataLoader()
+          const result = await this.options.dataLoader()
           // 初始化失败
           if (!result.rawData) {
             this.options.dataLoadFailureHandler?.(result, to, from, next)
