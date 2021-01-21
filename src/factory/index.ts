@@ -309,14 +309,14 @@ export function createDefaultRouterInterceptor(options: RouterInterceptorOption)
           }
 
           // 请求数据
-          const rawData = this.options.dataLoader()
+          const result = this.options.dataLoader()
           // 初始化失败
-          if (!rawData) {
-            this.options.dataLoadFailureHandler?.()
+          if (!result.rawData) {
+            this.options.dataLoadFailureHandler?.(result, to, from, next)
             return
           }
           // 初始化核心数据
-          framework.setMenuTree(rawData)
+          framework.setMenuTree(result.rawData)
           // 注入路由
           if (this.options.routerInjectOption) {
             this.options.routerInjectOption.router =

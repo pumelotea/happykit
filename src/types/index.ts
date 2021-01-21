@@ -218,6 +218,15 @@ export declare interface HappyKitFrameworkOption {
 }
 
 /**
+ * 数据加载返回对象
+ */
+export declare interface DataLoadResult {
+  rawData: any
+
+  [propName: string]: any
+}
+
+/**
  * 框架
  */
 export declare interface HappyKitFramework {
@@ -408,12 +417,17 @@ export declare interface RouterInterceptorOption {
   /**
    * 数据加载器
    */
-  dataLoader?(): any
+  dataLoader?(): DataLoadResult
 
   /**
    * 数据加载失败回调
    */
-  dataLoadFailureHandler?(): void
+  dataLoadFailureHandler?(
+    result: DataLoadResult,
+    to: RouteLocationNormalized,
+    from: RouteLocationNormalized,
+    next?: NavigationGuardNext,
+  ): void
 
   /**
    * 路由注入参数

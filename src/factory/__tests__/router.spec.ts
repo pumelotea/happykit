@@ -268,18 +268,20 @@ describe('happykit router', () => {
       framework,
       interceptorType: RouterInterceptorType.BEFORE,
       dataLoader() {
-        return [
-          {
-            name: 'child',
-            path: '/path',
-            icon: 'icon',
-            view: '/demo',
-            isRouter: true,
-            isKeepalive: true,
-            type: 'menu',
-            children: [],
-          },
-        ]
+        return {
+          rawData: [
+            {
+              name: 'child',
+              path: '/path',
+              icon: 'icon',
+              view: '/demo',
+              isRouter: true,
+              isKeepalive: true,
+              type: 'menu',
+              children: [],
+            },
+          ],
+        }
       },
       routerInjectOption: {
         parentRoute: {
