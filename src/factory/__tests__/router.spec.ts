@@ -2,7 +2,7 @@ import { createApp, defineComponent } from 'vue'
 import { createHappyFramework } from '../../framework'
 import { createMemoryHistory, createRouter } from 'vue-router'
 import { createDefaultRouterInterceptor, injectRoutes, upgradeRouter } from '../index'
-import { HAPPYKIT_INJECT, RouterInterceptorType } from '../../types'
+import { DataLoadResult, HAPPYKIT_INJECT, RouterInterceptorType } from '../../types'
 
 describe('happykit router', () => {
   test('injectRoutes normal', async () => {
@@ -310,6 +310,24 @@ describe('happykit router', () => {
 
     await router.push('/home')
     expect(root.innerHTML).toBe('<div><!----></div>')
+  })
+
+  test('createDefaultRouterInterceptor dataLoader result promise ', async () => {
+    const beforeEach = createDefaultRouterInterceptor({
+      framework: createHappyFramework(),
+      interceptorType: RouterInterceptorType.BEFORE,
+      async dataLoader() {
+        const res = new Promise((resolve, reject) => {
+          resolve([])
+        })
+        return {
+          rawData: await res,
+        }
+      },
+    })
+    expect(await beforeEach.options.dataLoader!()).toStrictEqual({
+      rawData: [],
+    })
   })
 
   // test('defaultRouterInterceptor next is undefined', async () => {
