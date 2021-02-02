@@ -272,6 +272,9 @@ export function upgradeRouter(framework: HappyKitFramework, router: Router): Hap
     framework,
     push(to: RouteLocationRaw, title?: string): Promise<NavigationFailure | void | undefined> {
       if (title) {
+        // 主动补偿一次url转换
+        // 因为在resolve之后再push会把空格转换成+号
+        to = router.resolve(to)
         const nextPageId = this.framework.options.pageIdFactory?.getNextPageId(to)
         if (!nextPageId) {
           throw Error('pageIdFactory is undefined')
