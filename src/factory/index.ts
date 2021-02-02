@@ -162,7 +162,7 @@ export function createDefaultPageIdFactory(framework: HappyKitFramework): PageId
   return {
     framework,
     generate(fullPath: string) {
-      return md5(fullPath)
+      return md5(decodeURI(fullPath))
     },
     getNextPageId(to: RouteLocationRaw) {
       const router: Router = this.framework.options.app?.config.globalProperties.$router
