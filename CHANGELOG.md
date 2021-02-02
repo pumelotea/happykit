@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="1.3.1"></a>
+## [1.3.1](https://github.com/pumelotea/happykit/compare/v1.3.0...v1.3.1) (2021-02-02)
+
+
+### Bug Fixes
+
+* **factory:** fullPath带中文的情况会被encodeURI ([#29](https://github.com/pumelotea/happykit/issues/29)) ([afddccf](https://github.com/pumelotea/happykit/commit/afddccf))
+
+
+
 <a name="1.3.0"></a>
 # [1.3.0](https://github.com/pumelotea/happykit/compare/v1.2.2...v1.3.0) (2021-01-21)
 
