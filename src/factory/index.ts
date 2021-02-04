@@ -155,6 +155,20 @@ export function createDefaultMenuAdapter(): MenuAdapter<MenuItem> {
 }
 
 /**
+ * 对对象根据key升序排序
+ * @param source
+ */
+export function sortObject(source: any) {
+  const target: any = {}
+  Object.keys(source)
+    .sort()
+    .forEach((e) => {
+      target[e] = source[e]
+    })
+  return target
+}
+
+/**
  * 创建默认的页面ID生成工厂
  * @param framework 框架上下文
  */
@@ -162,15 +176,24 @@ export function createDefaultPageIdFactory(framework: HappyKitFramework): PageId
   return {
     framework,
     generate(fullPath: string) {
-      return md5(decodeURI(fullPath))
+      return md5(fullPath)
     },
     getNextPageId(to: RouteLocationRaw) {
       const router: Router = this.framework.options.app?.config.globalProperties.$router
       if (!router) {
         throw Error('getNextPageId:router instance is null')
       }
+
       const route = router.resolve(to)
-      return this.generate(route.fullPath)
+
+      const idObject = {
+        name: route.name,
+        path: route.path,
+        query: sortObject(route.query),
+        params: sortObject(route.params),
+      }
+
+      return this.generate(JSON.stringify(idObject))
     },
   }
 }
@@ -272,9 +295,6 @@ export function upgradeRouter(framework: HappyKitFramework, router: Router): Hap
     framework,
     push(to: RouteLocationRaw, title?: string): Promise<NavigationFailure | void | undefined> {
       if (title) {
-        // 主动补偿一次url转换
-        // 因为在resolve之后再push会把空格转换成+号
-        to = router.resolve(to)
         const nextPageId = this.framework.options.pageIdFactory?.getNextPageId(to)
         if (!nextPageId) {
           throw Error('pageIdFactory is undefined')
@@ -296,10 +316,6 @@ export function createDefaultRouterInterceptor(options: RouterInterceptorOption)
       options,
       async filter(to, from, next) {
         const framework = this.options.framework
-        // console.log(
-        //   'RouterInterceptor Before: ',
-        //   `${from.path} ---> ${to.path}`
-        // )
 
         if (!next) {
           throw new Error('RouterInterceptor:next is undefined')
@@ -330,13 +346,8 @@ export function createDefaultRouterInterceptor(options: RouterInterceptorOption)
           // 初始化完成
           framework.routerInitiated = true
           // 跳转到目标路由
-          // console.log(
-          //   framework.options.app?.config.globalProperties.$router.getRoutes()
-          // )
-          // console.log(await framework.options.app?.config.globalProperties.$router.isReady())
-
-          next(to)
-          return
+          const fun = this.options.routerInjectOption?.router?.push || next
+          return fun(to.fullPath)
         }
 
         const menuId = to.meta.menuId
