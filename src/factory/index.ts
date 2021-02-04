@@ -316,10 +316,6 @@ export function createDefaultRouterInterceptor(options: RouterInterceptorOption)
       options,
       async filter(to, from, next) {
         const framework = this.options.framework
-        // console.log(
-        //   'RouterInterceptor Before: ',
-        //   `${from.path} ---> ${to.path}`
-        // )
 
         if (!next) {
           throw new Error('RouterInterceptor:next is undefined')
@@ -350,13 +346,8 @@ export function createDefaultRouterInterceptor(options: RouterInterceptorOption)
           // 初始化完成
           framework.routerInitiated = true
           // 跳转到目标路由
-          // console.log(
-          //   framework.options.app?.config.globalProperties.$router.getRoutes()
-          // )
-          // console.log(await framework.options.app?.config.globalProperties.$router.isReady())
-
-          next(to)
-          return
+          const fun = this.options.routerInjectOption?.router?.push || next
+          return fun(to.fullPath)
         }
 
         const menuId = to.meta.menuId
