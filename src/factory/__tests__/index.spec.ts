@@ -1,10 +1,4 @@
-import {
-  createDefaultPageIdFactory,
-  createDefaultTrackerIdFactory,
-  createEmptyMenuItem,
-  injectRoutes,
-  upgradeRouter,
-} from '../index'
+import { createDefaultPageIdFactory, createDefaultTrackerIdFactory, createEmptyMenuItem } from '../index'
 import { HAPPYKIT_INJECT, LinkTarget, MenuItem, MenuType } from '../../types'
 import { createHappyFramework } from '../../index'
 import { uuid } from '../../utils'
@@ -85,5 +79,12 @@ test('defaultPageIdFactory', async () => {
   app.use(router)
   await router.isReady()
 
-  expect(md5(router.resolve(to).fullPath)).toBe(defaultPageIdFactory.getNextPageId(to))
+  const idObject = {
+    name: undefined,
+    path: '/path',
+    query: { id: '1' },
+    params: {},
+  }
+
+  expect(md5(JSON.stringify(idObject))).toBe(defaultPageIdFactory.getNextPageId(to))
 })

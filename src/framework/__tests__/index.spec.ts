@@ -123,8 +123,16 @@ test('happyFramework member methods', async () => {
 
   // openNav
   const navItem = framework.openNav('/path', framework.getMenuTree().value[0], 'name')
+
   expect(navItem).toStrictEqual({
-    pageId: framework.options.pageIdFactory?.generate('/path'),
+    pageId: framework.options.pageIdFactory?.generate(
+      JSON.stringify({
+        name: 'name',
+        path: '/path',
+        query: {},
+        params: {},
+      }),
+    ),
     title: 'name',
     to: '/path',
     menuItem: framework.getMenuTree().value[0],
@@ -147,17 +155,48 @@ test('happyFramework member methods', async () => {
   // getBreadcrumb
   expect(framework.getBreadcrumb()).toEqual(framework.getMenuTree().value[0].breadcrumb)
   expect(framework.getBreadcrumb('1')).toEqual([])
-  expect(framework.getBreadcrumb(framework.options.pageIdFactory?.generate('/path'))).toEqual(
-    framework.getMenuTree().value[0].breadcrumb,
-  )
+  expect(
+    framework.getBreadcrumb(
+      framework.options.pageIdFactory?.generate(
+        JSON.stringify({
+          name: 'name',
+          path: '/path',
+          query: {},
+          params: {},
+        }),
+      ),
+    ),
+  ).toEqual(framework.getMenuTree().value[0].breadcrumb)
 
   // getNav
   expect(framework.getNav('1')).toEqual(null)
-  expect(framework.getNav(framework.options.pageIdFactory!.generate('/path'))).toEqual(framework.getNavList().value[0])
+  expect(
+    framework.getNav(
+      framework.options.pageIdFactory!.generate(
+        JSON.stringify({
+          name: 'name',
+          path: '/path',
+          query: {},
+          params: {},
+        }),
+      ),
+    ),
+  ).toEqual(framework.getNavList().value[0])
 
   // isExistNav
   expect(framework.isExistNav('1')).toEqual(false)
-  expect(framework.isExistNav(framework.options.pageIdFactory!.generate('/path'))).toEqual(true)
+  expect(
+    framework.isExistNav(
+      framework.options.pageIdFactory!.generate(
+        JSON.stringify({
+          name: 'name',
+          path: '/path',
+          query: {},
+          params: {},
+        }),
+      ),
+    ),
+  ).toEqual(true)
 
   // clickMenuItem
   framework.clickMenuItem(framework.getMenuTree().value[0].menuId)
@@ -189,18 +228,55 @@ test('happyFramework member methods', async () => {
 
   // clickNavItem
   expect(framework.currentMenuRoute.value).toBe(null)
-  framework.clickNavItem(ider('/path?id=7'))
+  framework.clickNavItem(
+    ider(
+      JSON.stringify({
+        name: 'name',
+        path: '/path',
+        query: { id: '7' },
+        params: {},
+      }),
+    ),
+  )
   expect(framework.currentMenuRoute.value).toBe(null)
-  framework.clickNavItem(ider('/path?id=5'))
+  framework.clickNavItem(
+    ider(
+      JSON.stringify({
+        name: 'name',
+        path: '/path',
+        query: { id: '5' },
+        params: {},
+      }),
+    ),
+  )
   expect(framework.currentMenuRoute.value).toStrictEqual(navItem5)
-  framework.clickNavItem(ider('/path?id=6'))
+  framework.clickNavItem(
+    ider(
+      JSON.stringify({
+        name: 'name',
+        path: '/path',
+        query: { id: '6' },
+        params: {},
+      }),
+    ),
+  )
   expect(framework.currentMenuRoute.value).toStrictEqual(navItem6)
 
   const done2 = jest.fn((removedNavs: NavItem[], needNavs: NavItem[]) => {
     expect(needNavs).toStrictEqual([navItem4])
     expect(removedNavs).toStrictEqual([])
   })
-  framework.clickNavItem(ider('/path?id=4'), done2)
+  framework.clickNavItem(
+    ider(
+      JSON.stringify({
+        name: 'name',
+        path: '/path',
+        query: { id: '4' },
+        params: {},
+      }),
+    ),
+    done2,
+  )
   expect(framework.currentMenuRoute.value).toStrictEqual(navItem4)
   expect(done2).toHaveBeenCalledTimes(1)
 
@@ -212,7 +288,18 @@ test('happyFramework member methods', async () => {
     expect(needNavs).toStrictEqual([navItemFromMenu])
     expect(removedNavs).toStrictEqual([navItem4])
   })
-  framework.closeNav(NavCloseType.SELF, ider('/path?id=4'), done3)
+  framework.closeNav(
+    NavCloseType.SELF,
+    ider(
+      JSON.stringify({
+        name: 'name',
+        path: '/path',
+        query: { id: '4' },
+        params: {},
+      }),
+    ),
+    done3,
+  )
   expect(framework.currentMenuRoute.value).toStrictEqual(navItemFromMenu)
   expect(framework.navigatorList.value).toStrictEqual([navItemFromMenu, navItem5, navItem6])
 
@@ -226,7 +313,18 @@ test('happyFramework member methods', async () => {
   // current => /path?id=4
   // navList => /path /path?id=4  /path?id=5  /path?id=6
   // close => /path?id=5
-  framework.closeNav(NavCloseType.SELF, ider('/path?id=5'), done31)
+  framework.closeNav(
+    NavCloseType.SELF,
+    ider(
+      JSON.stringify({
+        name: 'name',
+        path: '/path',
+        query: { id: '5' },
+        params: {},
+      }),
+    ),
+    done31,
+  )
   expect(framework.currentMenuRoute.value).toStrictEqual(navItem4)
   expect(framework.navigatorList.value).toStrictEqual([navItemFromMenu, navItem4, navItem6])
   expect(done31).toHaveBeenCalledTimes(1)
@@ -241,7 +339,18 @@ test('happyFramework member methods', async () => {
   // current => /path?id=4
   // navList => /path /path?id=4  /path?id=5  /path?id=6
   // close => /path?id=4 left
-  framework.closeNav(NavCloseType.LEFT, ider('/path?id=4'), done4)
+  framework.closeNav(
+    NavCloseType.LEFT,
+    ider(
+      JSON.stringify({
+        name: 'name',
+        path: '/path',
+        query: { id: '4' },
+        params: {},
+      }),
+    ),
+    done4,
+  )
   expect(framework.currentMenuRoute.value).toStrictEqual(navItem4)
   expect(framework.navigatorList.value).toStrictEqual([navItem4, navItem5, navItem6])
   expect(done4).toHaveBeenCalledTimes(1)
@@ -256,7 +365,18 @@ test('happyFramework member methods', async () => {
   // current => /path?id=4
   // navList => /path /path?id=4  /path?id=5  /path?id=6
   // close => /path?id=4 right
-  framework.closeNav(NavCloseType.RIGHT, ider('/path?id=4'), done5)
+  framework.closeNav(
+    NavCloseType.RIGHT,
+    ider(
+      JSON.stringify({
+        name: 'name',
+        path: '/path',
+        query: { id: '4' },
+        params: {},
+      }),
+    ),
+    done5,
+  )
   expect(framework.currentMenuRoute.value).toStrictEqual(navItem4)
   expect(framework.navigatorList.value).toStrictEqual([navItemFromMenu, navItem4])
   expect(done5).toHaveBeenCalledTimes(1)
@@ -271,7 +391,18 @@ test('happyFramework member methods', async () => {
   // current => /path?id=4
   // navList => /path /path?id=4  /path?id=5  /path?id=6
   // close => /path?id=4 other
-  framework.closeNav(NavCloseType.OTHER, ider('/path?id=4'), done6)
+  framework.closeNav(
+    NavCloseType.OTHER,
+    ider(
+      JSON.stringify({
+        name: 'name',
+        path: '/path',
+        query: { id: '4' },
+        params: {},
+      }),
+    ),
+    done6,
+  )
   expect(framework.currentMenuRoute.value).toStrictEqual(navItem4)
   expect(framework.navigatorList.value).toStrictEqual([navItem4])
   expect(done6).toHaveBeenCalledTimes(1)
@@ -286,7 +417,18 @@ test('happyFramework member methods', async () => {
   // current => /path?id=4
   // navList => /path /path?id=4  /path?id=5  /path?id=6
   // close => /path?id=4 all
-  framework.closeNav(NavCloseType.ALL, ider('/path?id=4'), done7)
+  framework.closeNav(
+    NavCloseType.ALL,
+    ider(
+      JSON.stringify({
+        name: 'name',
+        path: '/path',
+        query: { id: '4' },
+        params: {},
+      }),
+    ),
+    done7,
+  )
   expect(framework.currentMenuRoute.value).toStrictEqual(null)
   expect(framework.navigatorList.value).toStrictEqual([])
   expect(done7).toHaveBeenCalledTimes(1)
@@ -298,7 +440,17 @@ test('happyFramework member methods', async () => {
   // current => /path?id=4
   // navList => /path /path?id=4  /path?id=5  /path?id=6
   // close => /path?id=7 self not found
-  framework.closeNav(NavCloseType.SELF, ider('/path?id=7'))
+  framework.closeNav(
+    NavCloseType.SELF,
+    ider(
+      JSON.stringify({
+        name: 'name',
+        path: '/path',
+        query: { id: '7' },
+        params: {},
+      }),
+    ),
+  )
   expect(framework.currentMenuRoute.value).toStrictEqual(navItem4)
   expect(framework.navigatorList.value).toStrictEqual([navItemFromMenu, navItem4, navItem5, navItem6])
 
@@ -309,7 +461,17 @@ test('happyFramework member methods', async () => {
   // current => /path?id=4
   // navList => /path /path?id=4  /path?id=5  /path?id=6
   // close => /path?id=4  not nav
-  framework.closeNav(NavCloseType.SELF, ider('/path?id=4'))
+  framework.closeNav(
+    NavCloseType.SELF,
+    ider(
+      JSON.stringify({
+        name: 'name',
+        path: '/path',
+        query: { id: '4' },
+        params: {},
+      }),
+    ),
+  )
   expect(framework.currentMenuRoute.value).toStrictEqual(null)
   expect(framework.navigatorList.value).toStrictEqual([navItemFromMenu, navItem5, navItem6])
 
@@ -319,7 +481,17 @@ test('happyFramework member methods', async () => {
   // current => /path
   // navList => /path /path?id=4  /path?id=5  /path?id=6
   // close => /path
-  framework.closeNav(NavCloseType.SELF, ider('/path'))
+  framework.closeNav(
+    NavCloseType.SELF,
+    ider(
+      JSON.stringify({
+        name: 'name',
+        path: '/path',
+        query: {},
+        params: {},
+      }),
+    ),
+  )
   expect(framework.currentMenuRoute.value).toStrictEqual(navItem4)
   expect(framework.navigatorList.value).toStrictEqual([navItem4, navItem5, navItem6])
 
@@ -329,7 +501,17 @@ test('happyFramework member methods', async () => {
   // current => /path
   // navList => /path /path?id=4  /path?id=5  /path?id=6
   // close => /path
-  framework.closeNav(NavCloseType.SELF, ider('/path'))
+  framework.closeNav(
+    NavCloseType.SELF,
+    ider(
+      JSON.stringify({
+        name: 'name',
+        path: '/path',
+        query: {},
+        params: {},
+      }),
+    ),
+  )
   expect(framework.currentMenuRoute.value).toStrictEqual(null)
   expect(framework.navigatorList.value).toStrictEqual([])
 
@@ -339,7 +521,17 @@ test('happyFramework member methods', async () => {
   // current => /path
   // navList => /path /path?id=4  /path?id=5  /path?id=6
   // close => /path?id=7
-  framework.closeNav(NavCloseType.LEFT, ider('/path?id=7'))
+  framework.closeNav(
+    NavCloseType.LEFT,
+    ider(
+      JSON.stringify({
+        name: 'name',
+        path: '/path',
+        query: { id: '7' },
+        params: {},
+      }),
+    ),
+  )
   expect(framework.currentMenuRoute.value).toStrictEqual(null)
   expect(framework.navigatorList.value).toStrictEqual([navItemFromMenu, navItem4, navItem5, navItem6])
 
@@ -349,7 +541,17 @@ test('happyFramework member methods', async () => {
   // current => /path
   // navList => /path /path?id=4  /path?id=5  /path?id=6
   // close => /path?id=7
-  framework.closeNav(NavCloseType.RIGHT, ider('/path?id=7'))
+  framework.closeNav(
+    NavCloseType.RIGHT,
+    ider(
+      JSON.stringify({
+        name: 'name',
+        path: '/path',
+        query: { id: '7' },
+        params: {},
+      }),
+    ),
+  )
   expect(framework.currentMenuRoute.value).toStrictEqual(null)
   expect(framework.navigatorList.value).toStrictEqual([navItemFromMenu, navItem4, navItem5, navItem6])
 
@@ -359,7 +561,17 @@ test('happyFramework member methods', async () => {
   // current => /path
   // navList => /path /path?id=4  /path?id=5  /path?id=6
   // close => /path?id=7
-  framework.closeNav(NavCloseType.OTHER, ider('/path?id=7'))
+  framework.closeNav(
+    NavCloseType.OTHER,
+    ider(
+      JSON.stringify({
+        name: 'name',
+        path: '/path',
+        query: { id: '7' },
+        params: {},
+      }),
+    ),
+  )
   expect(framework.currentMenuRoute.value).toStrictEqual(null)
   expect(framework.navigatorList.value).toStrictEqual([navItemFromMenu, navItem4, navItem5, navItem6])
 })
