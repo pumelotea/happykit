@@ -54,10 +54,10 @@ test('menuAdapter not found', () => {
   }).not.toThrow()
 })
 
-test('refreshClientId', () => {
+test('refreshClientId', async () => {
   const framework = createHappyFramework()
   const clientId = localStorage.getItem('clientId')
-  framework.refreshClientId()
+  await framework.refreshClientId()
   const clientIdChanged = localStorage.getItem('clientId')
   expect(clientId).not.toBe(clientIdChanged)
 })
@@ -65,9 +65,8 @@ test('refreshClientId', () => {
 test('refreshClientId:TrackerIdFactory is undefined', () => {
   const framework = createHappyFramework()
   delete framework.options.trackerIdFactory
-  expect(() => {
-    framework.refreshClientId()
-  }).toThrow('TrackerIdFactory is undefined')
+
+  expect(framework.refreshClientId()).rejects.toBe('TrackerIdFactory is undefined')
 })
 
 test('happyFramework member methods', async () => {

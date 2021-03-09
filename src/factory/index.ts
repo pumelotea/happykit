@@ -17,6 +17,7 @@ import {
 } from '../types'
 import { deepClone, uuid } from '../utils'
 import { NavigationFailure, RouteLocationRaw, Router } from 'vue-router'
+import FingerprintJS from '@fingerprintjs/fingerprintjs'
 
 // tslint:disable-next-line:no-var-requires
 const md5: any = require('js-md5')
@@ -205,8 +206,15 @@ export function createDefaultPageIdFactory(framework: HappyKitFramework): PageId
 export function createDefaultTrackerIdFactory(framework: HappyKitFramework): TrackerIdFactory {
   return {
     framework,
-    getId(): string {
-      return uuid().replace(/-/g, '')
+    async getId() {
+      const fp = await FingerprintJS.load()
+
+      // The FingerprintJS agent is ready.
+      // Get a visitor identifier when you'd like to.
+      const result = await fp.get()
+
+      // This is the visitor identifier:
+      return result.visitorId
     },
   }
 }
