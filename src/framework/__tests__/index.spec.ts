@@ -66,7 +66,7 @@ test('refreshClientId:TrackerIdFactory is undefined', () => {
   const framework = createHappyFramework()
   delete framework.options.trackerIdFactory
 
-  expect(framework.refreshClientId()).rejects.toBe('TrackerIdFactory is undefined')
+  expect(framework.refreshClientId()).rejects.toStrictEqual(Error('TrackerIdFactory is undefined'))
 })
 
 test('happyFramework member methods', async () => {
