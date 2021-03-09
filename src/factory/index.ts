@@ -15,7 +15,7 @@ import {
   RouterInterceptorType,
   TrackerIdFactory,
 } from '../types'
-import { deepClone, uuid } from '../utils'
+import { deepClone, getCanvasFingerPrint, uuid } from '../utils'
 import { NavigationFailure, RouteLocationRaw, Router } from 'vue-router'
 
 // tslint:disable-next-line:no-var-requires
@@ -206,7 +206,7 @@ export function createDefaultTrackerIdFactory(framework: HappyKitFramework): Tra
   return {
     framework,
     getId(): string {
-      return uuid().replace(/-/g, '')
+      return md5(getCanvasFingerPrint('happykit.org'))
     },
   }
 }
