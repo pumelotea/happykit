@@ -3,7 +3,7 @@ import App from './App.vue'
 import router from '@/router'
 import store from '@/store'
 import http from '@/apis'
-import {errorHandler,warnHandler} from '@/common/handlers.ts'
+import {errorHandler,warnHandler} from '@/common/handlers'
 import eventBus from '@/common/eventBus'
 // 导入框架实例
 import happyFramework from '@/framework'
