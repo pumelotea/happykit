@@ -59,7 +59,7 @@ test('refreshClientId', () => {
   const clientId = localStorage.getItem('clientId')
   framework.refreshClientId()
   const clientIdChanged = localStorage.getItem('clientId')
-  expect(clientId).not.toBe(clientIdChanged)
+  expect(clientId).toBe(clientIdChanged)
 })
 
 test('refreshClientId:TrackerIdFactory is undefined', () => {
