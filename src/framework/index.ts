@@ -107,15 +107,15 @@ export function createHappyFramework(options?: HappyKitFrameworkOption): HappyKi
     getTracker() {
       return this.tracker
     },
-    initTracker() {
-      const id = localStorage.getItem('clientId')
-      this.tracker.clientId = id || this.refreshClientId()
+    async initTracker() {
+      // const id = localStorage.getItem('clientId')
+      this.tracker.clientId = await this.refreshClientId()
     },
-    refreshClientId() {
+    async refreshClientId() {
       if (!this.options.trackerIdFactory) {
         throw Error('TrackerIdFactory is undefined')
       }
-      const id = this.options.trackerIdFactory.getId()
+      const id = await this.options.trackerIdFactory.getId()
       this.tracker.clientId = id
       // 持久化
       localStorage.setItem('clientId', id)

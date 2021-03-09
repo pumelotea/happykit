@@ -33,7 +33,7 @@ test('createEmptyMenuItem', () => {
 
 test('defaultTrackerIdFactory', () => {
   const defaultTrackerIdFactory = createDefaultTrackerIdFactory(createHappyFramework())
-  expect(defaultTrackerIdFactory.getId().length).toBe(uuid().replace(/-/g, '').length)
+  expect(defaultTrackerIdFactory.getId()).resolves.not.toBe('')
 })
 
 test('defaultPageIdFactory', async () => {

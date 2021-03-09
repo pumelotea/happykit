@@ -200,7 +200,7 @@ export declare interface PageIdFactory {
 export declare interface TrackerIdFactory {
   framework: HappyKitFramework
 
-  getId(): string
+  getId(): Promise<string>
 }
 
 /**
@@ -312,12 +312,12 @@ export declare interface HappyKitFramework {
   /**
    * 初始化追踪器
    */
-  initTracker(): void
+  initTracker(): Promise<void>
 
   /**
    * 刷新客户端id
    */
-  refreshClientId(): string
+  refreshClientId(): Promise<string>
 
   /**
    * 获取导航列表
