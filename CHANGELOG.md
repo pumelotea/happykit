@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="1.4.1"></a>
+# [1.4.1](https://github.com/pumelotea/happykit/compare/v1.3.4...v1.4.1) (2021-03-09)
+
+
+### Bug Fixes
+
+* **example:** 修复样例中的ts文件引入方式 ([71f01e1](https://github.com/pumelotea/happykit/commit/71f01e1))
+
+
+### Features
+
+* **tracker:** 使用canvas替换uuid ([#38](https://github.com/pumelotea/happykit/issues/38)) ([4d7d596](https://github.com/pumelotea/happykit/commit/4d7d596))
+
+
+
 <a name="1.3.4"></a>
 ## [1.3.4](https://github.com/pumelotea/happykit/compare/v1.3.3...v1.3.4) (2021-03-04)
 
