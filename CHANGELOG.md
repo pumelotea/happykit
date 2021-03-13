@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="1.5.1"></a>
+## [1.5.1](https://github.com/pumelotea/happykit/compare/v1.5.0...v1.5.1) (2021-03-13)
+
+
+### Bug Fixes
+
+* **factory:** 修复路由注入，数组叠加的bug ([ee37d8e](https://github.com/pumelotea/happykit/commit/ee37d8e))
+
+
+
 <a name="1.5.0"></a>
 # [1.5.0](https://github.com/pumelotea/happykit/compare/v1.4.1...v1.5.0) (2021-03-13)
 
