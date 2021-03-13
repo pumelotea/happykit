@@ -240,7 +240,7 @@ export function injectRoutes(options: RouterInjectOption) {
   options.routes.forEach((e) => {
     const route = {
       path: e.routerPath,
-      name: e.name,
+      name: options.randomName ? uuid() : e.name,
       component: options.viewLoader(e.view),
       meta: {
         _source: HAPPYKIT_INJECT,

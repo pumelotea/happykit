@@ -394,6 +394,11 @@ export declare interface RouterInjectOption {
   routes: MenuItem[]
 
   /**
+   * 随机路由名称
+   */
+  randomName?: boolean
+
+  /**
    * 视图组件加载器
    * @param view
    */
