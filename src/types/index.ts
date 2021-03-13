@@ -12,6 +12,7 @@ import {
 } from 'vue-router'
 
 export const HAPPYKIT_INJECT = 'HAPPYKIT_INJECT'
+export const HAPPYKIT_PARENT_ROUTE = 'HAPPYKIT_PARENT_ROUTE'
 export const HAPPYKIT_STORAGE = 'HAPPYKIT_STORAGE'
 export const NAV_TITLE = 'NAV_TITLE'
 export const SECURITY_TOKEN = 'SECURITY_TOKEN'

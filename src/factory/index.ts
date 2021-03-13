@@ -2,6 +2,7 @@ import {
   HAPPYKIT_INJECT,
   HAPPYKIT_STORAGE,
   NAV_TITLE,
+  HAPPYKIT_PARENT_ROUTE,
   HappyKitFramework,
   HappyKitRouter,
   LinkTarget,
@@ -223,9 +224,11 @@ export function injectRoutes(options: RouterInjectOption) {
 
   if (options.parentRoute.meta) {
     options.parentRoute.meta._source = HAPPYKIT_INJECT
+    options.parentRoute.meta._parentRoute = HAPPYKIT_PARENT_ROUTE
   } else {
     options.parentRoute.meta = {
       _source: HAPPYKIT_INJECT,
+      _parentRoute: HAPPYKIT_PARENT_ROUTE,
     }
   }
 
@@ -235,7 +238,6 @@ export function injectRoutes(options: RouterInjectOption) {
 
   // 注入父级路由
   options.router!.addRoute(options.parentRoute)
-
   // 注入子级路由
   options.routes.forEach((e) => {
     const route = {
@@ -258,6 +260,11 @@ export function injectRoutes(options: RouterInjectOption) {
  * @param router
  */
 export function removeRoutes(router: Router) {
+  router.getRoutes().forEach((e) => {
+    if (e.name && e.meta._parentRoute === HAPPYKIT_PARENT_ROUTE) {
+      router.removeRoute(e.name)
+    }
+  })
   router.getRoutes().forEach((e) => {
     if (e.name && e.meta._source === HAPPYKIT_INJECT) {
       router.removeRoute(e.name)
@@ -340,8 +347,16 @@ export function createDefaultRouterInterceptor(options: RouterInterceptorOption)
           if (this.options.routerInjectOption) {
             this.options.routerInjectOption.router =
               this.options.routerInjectOption.router || framework.options.app?.config.globalProperties.$router
-            this.options.routerInjectOption.routes.push(...framework.getRouteMappingList().value)
-            injectRoutes(this.options.routerInjectOption)
+
+            // 备份用户设置的路由
+            const list = [...this.options.routerInjectOption.routes]
+            const ready: MenuItem[] = [...list, ...framework.getRouteMappingList().value]
+            // 生成新的配置
+            const opt = {
+              ...this.options.routerInjectOption,
+            }
+            opt.routes = ready
+            injectRoutes(opt)
           }
           // 初始化完成
           framework.routerInitiated = true
