@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="1.5.0"></a>
+# [1.5.0](https://github.com/pumelotea/happykit/compare/v1.4.1...v1.5.0) (2021-03-13)
+
+
+### Features
+
+* **factory:** 路由注入新增随机路由名称选项，默认不开启 ([2f0fe48](https://github.com/pumelotea/happykit/commit/2f0fe48))
+
+
+
 <a name="1.4.1"></a>
 # [1.4.1](https://github.com/pumelotea/happykit/compare/v1.3.4...v1.4.1) (2021-03-09)
 
