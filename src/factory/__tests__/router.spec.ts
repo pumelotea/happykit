@@ -2,7 +2,7 @@ import { createApp, defineComponent } from 'vue'
 import { createHappyFramework } from '../../framework'
 import { createMemoryHistory, createRouter } from 'vue-router'
 import { createDefaultRouterInterceptor, injectRoutes, upgradeRouter } from '../index'
-import { DataLoadResult, HAPPYKIT_INJECT, RouterInterceptorType } from '../../types'
+import { HAPPYKIT_INJECT } from '../../types'
 
 describe('happykit router', () => {
   test('injectRoutes normal', async () => {
@@ -266,7 +266,7 @@ describe('happykit router', () => {
     })
     const beforeEach = createDefaultRouterInterceptor({
       framework,
-      interceptorType: RouterInterceptorType.BEFORE,
+      interceptorType: 'before',
       dataLoader() {
         return {
           rawData: [
@@ -315,7 +315,7 @@ describe('happykit router', () => {
   test('createDefaultRouterInterceptor dataLoader result promise ', async () => {
     const beforeEach = createDefaultRouterInterceptor({
       framework: createHappyFramework(),
-      interceptorType: RouterInterceptorType.BEFORE,
+      interceptorType: 'before',
       async dataLoader() {
         const res = new Promise((resolve, reject) => {
           resolve([])

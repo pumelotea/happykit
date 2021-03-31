@@ -15,7 +15,7 @@ test('vue install', () => {
 test('default storage engine', () => {
   const instance = createHappySecurity()
   instance.options.storageEngine = undefined
-  expect(instance.options.storageEngine).not.toBe(StorageEngine.LOCAL_STORAGE)
+  expect(instance.options.storageEngine).not.toBe('local_storage')
   expect(instance.options.storageEngine).toBe(undefined)
   expect(instance.getStorage()).toBe(localStorage)
 })
@@ -38,7 +38,7 @@ describe('base on localStorage engine', () => {
     expect(instance.getToken()).toBe('')
     expect(instance.user.value).toBe(null)
     expect(instance.getUser().value).toBe(null)
-    expect(instance.options.storageEngine).toBe(StorageEngine.LOCAL_STORAGE)
+    expect(instance.options.storageEngine).toBe('local_storage')
     expect(instance.getStorage()).toBe(localStorage)
   })
 
@@ -123,20 +123,20 @@ describe('base on sessionStorage engine', () => {
   sessionStorage.clear()
   test('createHappySecurity', () => {
     const instance = createHappySecurity({
-      storageEngine: StorageEngine.SESSION_STORAGE,
+      storageEngine: 'session_storage',
     })
     expect(instance.token).toBe('')
     expect(instance.getToken()).toBe('')
     expect(instance.user.value).toBe(null)
     expect(instance.getUser().value).toBe(null)
-    expect(instance.options.storageEngine).toBe(StorageEngine.SESSION_STORAGE)
+    expect(instance.options.storageEngine).toBe('session_storage')
     expect(instance.getStorage()).toBe(sessionStorage)
   })
 
   test('storage operate', () => {
     sessionStorage.clear()
     const instance = createHappySecurity({
-      storageEngine: StorageEngine.SESSION_STORAGE,
+      storageEngine: 'session_storage',
     })
     // 准备数据
     const keyToken = `${HAPPYKIT_STORAGE}/${SECURITY_TOKEN}`
@@ -167,7 +167,7 @@ describe('base on sessionStorage engine', () => {
   test('signIn&signOut', () => {
     sessionStorage.clear()
     const instance = createHappySecurity({
-      storageEngine: StorageEngine.SESSION_STORAGE,
+      storageEngine: 'session_storage',
     })
     const user2 = {
       username: 'username2',
@@ -192,7 +192,7 @@ describe('base on sessionStorage engine', () => {
   test('refreshToken', () => {
     sessionStorage.clear()
     const instance = createHappySecurity({
-      storageEngine: StorageEngine.SESSION_STORAGE,
+      storageEngine: 'session_storage',
     })
     instance.refreshToken('token3')
     expect(instance.getToken()).toBe('token3')
@@ -204,7 +204,7 @@ describe('base on sessionStorage engine', () => {
   test('refreshUser', () => {
     sessionStorage.clear()
     const instance = createHappySecurity({
-      storageEngine: StorageEngine.SESSION_STORAGE,
+      storageEngine: 'session_storage',
     })
     const user3 = {
       username: 'username3',

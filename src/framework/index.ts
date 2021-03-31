@@ -159,7 +159,7 @@ export function createHappyFramework(options?: HappyKitFrameworkOption): HappyKi
     },
     closeNav(type: NavCloseType, pageId?: string, event?: HappyKitNavEvent) {
       switch (type) {
-        case NavCloseType.SELF: {
+        case 'self': {
           // 搜索待关闭的导航项
           const pos = this.navigatorList.value.findIndex((e) => e.pageId === pageId)
           if (pos === -1) {
@@ -184,7 +184,7 @@ export function createHappyFramework(options?: HappyKitFrameworkOption): HappyKi
           event?.(res, needNavs)
           break
         }
-        case NavCloseType.LEFT: {
+        case 'left': {
           const pos = this.navigatorList.value.findIndex((e) => e.pageId === this.currentMenuRoute.value?.pageId)
           if (pos === -1) {
             return
@@ -194,7 +194,7 @@ export function createHappyFramework(options?: HappyKitFrameworkOption): HappyKi
           event?.(res, [])
           break
         }
-        case NavCloseType.RIGHT: {
+        case 'right': {
           const pos = this.navigatorList.value.findIndex((e) => e.pageId === this.currentMenuRoute.value?.pageId)
           if (pos === -1) {
             return
@@ -204,7 +204,7 @@ export function createHappyFramework(options?: HappyKitFrameworkOption): HappyKi
           event?.(res, [])
           break
         }
-        case NavCloseType.OTHER: {
+        case 'other': {
           const res: NavItem[] = []
           let tmp = null
           this.navigatorList.value.forEach((e) => {
@@ -221,7 +221,7 @@ export function createHappyFramework(options?: HappyKitFrameworkOption): HappyKi
           event?.(res, [])
           break
         }
-        case NavCloseType.ALL: {
+        case 'all': {
           const res = [...this.navigatorList.value]
           this.navigatorList.value = []
           clearNavTitleLocalStorage(res)

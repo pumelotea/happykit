@@ -5,7 +5,6 @@ import {
   HappyKitSecurityOption,
   SECURITY_TOKEN,
   SECURITY_USER,
-  StorageEngine,
   User,
 } from '../types'
 
@@ -22,7 +21,7 @@ export function createHappySecurity(options?: HappyKitSecurityOption): HappyKitS
     },
     init(opts?: HappyKitSecurityOption) {
       this.options = opts || {
-        storageEngine: StorageEngine.LOCAL_STORAGE,
+        storageEngine: 'local_storage',
       }
       this.loadFromStorage()
     },
@@ -52,9 +51,9 @@ export function createHappySecurity(options?: HappyKitSecurityOption): HappyKitS
     },
     getStorage() {
       switch (this.options.storageEngine) {
-        case StorageEngine.LOCAL_STORAGE:
+        case 'local_storage':
           return localStorage
-        case StorageEngine.SESSION_STORAGE:
+        case 'session_storage':
           return sessionStorage
         default:
           return localStorage

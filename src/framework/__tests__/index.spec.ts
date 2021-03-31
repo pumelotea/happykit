@@ -1,7 +1,7 @@
 import { createHappyFramework } from '../index'
 import { createApp, defineComponent } from 'vue'
 import { createMemoryHistory, createRouter } from 'vue-router'
-import { injectRoutes, MenuItem, NavCloseType, NavItem } from '../../index'
+import { injectRoutes, MenuItem, NavItem } from '../../index'
 
 test('createHappyFramework instance', () => {
   const framework = createHappyFramework()
@@ -289,7 +289,7 @@ test('happyFramework member methods', async () => {
     expect(removedNavs).toStrictEqual([navItem4])
   })
   framework.closeNav(
-    NavCloseType.SELF,
+    'self',
     ider(
       JSON.stringify({
         name: 'name',
@@ -314,7 +314,7 @@ test('happyFramework member methods', async () => {
   // navList => /path /path?id=4  /path?id=5  /path?id=6
   // close => /path?id=5
   framework.closeNav(
-    NavCloseType.SELF,
+    'self',
     ider(
       JSON.stringify({
         name: 'name',
@@ -340,7 +340,7 @@ test('happyFramework member methods', async () => {
   // navList => /path /path?id=4  /path?id=5  /path?id=6
   // close => /path?id=4 left
   framework.closeNav(
-    NavCloseType.LEFT,
+    'left',
     ider(
       JSON.stringify({
         name: 'name',
@@ -366,7 +366,7 @@ test('happyFramework member methods', async () => {
   // navList => /path /path?id=4  /path?id=5  /path?id=6
   // close => /path?id=4 right
   framework.closeNav(
-    NavCloseType.RIGHT,
+    'right',
     ider(
       JSON.stringify({
         name: 'name',
@@ -392,7 +392,7 @@ test('happyFramework member methods', async () => {
   // navList => /path /path?id=4  /path?id=5  /path?id=6
   // close => /path?id=4 other
   framework.closeNav(
-    NavCloseType.OTHER,
+    'other',
     ider(
       JSON.stringify({
         name: 'name',
@@ -418,7 +418,7 @@ test('happyFramework member methods', async () => {
   // navList => /path /path?id=4  /path?id=5  /path?id=6
   // close => /path?id=4 all
   framework.closeNav(
-    NavCloseType.ALL,
+    'all',
     ider(
       JSON.stringify({
         name: 'name',
@@ -441,7 +441,7 @@ test('happyFramework member methods', async () => {
   // navList => /path /path?id=4  /path?id=5  /path?id=6
   // close => /path?id=7 self not found
   framework.closeNav(
-    NavCloseType.SELF,
+    'self',
     ider(
       JSON.stringify({
         name: 'name',
@@ -462,7 +462,7 @@ test('happyFramework member methods', async () => {
   // navList => /path /path?id=4  /path?id=5  /path?id=6
   // close => /path?id=4  not nav
   framework.closeNav(
-    NavCloseType.SELF,
+    'self',
     ider(
       JSON.stringify({
         name: 'name',
@@ -482,7 +482,7 @@ test('happyFramework member methods', async () => {
   // navList => /path /path?id=4  /path?id=5  /path?id=6
   // close => /path
   framework.closeNav(
-    NavCloseType.SELF,
+    'self',
     ider(
       JSON.stringify({
         name: 'name',
@@ -502,7 +502,7 @@ test('happyFramework member methods', async () => {
   // navList => /path /path?id=4  /path?id=5  /path?id=6
   // close => /path
   framework.closeNav(
-    NavCloseType.SELF,
+    'self',
     ider(
       JSON.stringify({
         name: 'name',
@@ -522,7 +522,7 @@ test('happyFramework member methods', async () => {
   // navList => /path /path?id=4  /path?id=5  /path?id=6
   // close => /path?id=7
   framework.closeNav(
-    NavCloseType.LEFT,
+    'self',
     ider(
       JSON.stringify({
         name: 'name',
@@ -542,7 +542,7 @@ test('happyFramework member methods', async () => {
   // navList => /path /path?id=4  /path?id=5  /path?id=6
   // close => /path?id=7
   framework.closeNav(
-    NavCloseType.RIGHT,
+    'right',
     ider(
       JSON.stringify({
         name: 'name',
@@ -562,7 +562,7 @@ test('happyFramework member methods', async () => {
   // navList => /path /path?id=4  /path?id=5  /path?id=6
   // close => /path?id=7
   framework.closeNav(
-    NavCloseType.OTHER,
+    'other',
     ider(
       JSON.stringify({
         name: 'name',

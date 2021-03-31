@@ -67,7 +67,7 @@ export default {
       })
     }
 
-    const tp: any = [NavCloseType.ALL, NavCloseType.LEFT, NavCloseType.RIGHT, NavCloseType.OTHER, NavCloseType.SELF]
+    const tp: any = ['all', 'left', 'right', 'other', 'self']
     const closeNav = (type: number, pageId?: string) => {
       instance.closeNav(tp[type], pageId, (removedNavs: any, needNavs: any) => {
         console.log('已经移除1', removedNavs)

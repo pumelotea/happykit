@@ -1,5 +1,5 @@
 import { RouteRecordRaw } from 'vue-router'
-import { createDefaultRouterInterceptor,RouterInterceptorType } from '@/lib'
+import { createDefaultRouterInterceptor } from '@/lib'
 
 // 导入框架实例
 import happyFramework from '@/framework'
@@ -8,7 +8,7 @@ import routerData from '@/routerData'
 
 // 创建默认的拦截器
 const beforeInterceptor = createDefaultRouterInterceptor({
-  interceptorType:RouterInterceptorType.BEFORE,
+  interceptorType: 'before',
   framework:happyFramework,
   async dataLoader(){
     // 实际开发环境应该从服务端拉取数据
@@ -34,7 +34,7 @@ const beforeInterceptor = createDefaultRouterInterceptor({
   }
 })
 const afterInterceptor = createDefaultRouterInterceptor({
-  interceptorType:RouterInterceptorType.AFTER,
+  interceptorType: 'after',
   framework:happyFramework
 })
 

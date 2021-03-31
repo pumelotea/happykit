@@ -21,54 +21,32 @@ export const SECURITY_USER = 'SECURITY_USER'
 /**
  * 菜单类型
  */
-export enum MenuType {
-  MENU,
-  POINT,
-}
+export type MenuType = 'menu' | 'point'
 
 /**
  * 链接跳转类型
  */
-export enum LinkTarget {
-  SELF,
-  TAB,
-  BLANK,
-}
+export type LinkTarget = 'self' | 'tab' | 'blank'
 
 /**
  * 导航项关闭类型
  */
-export enum NavCloseType {
-  SELF,
-  LEFT,
-  RIGHT,
-  OTHER,
-  ALL,
-}
+export type NavCloseType = 'self' | 'left' | 'right' | 'other' | 'all'
 
 /**
  * 路由拦截类型
  */
-export enum RouterInterceptorType {
-  BEFORE,
-  AFTER,
-}
+export type RouterInterceptorType = 'before' | 'after'
 
 /**
  * HTTP请求拦截类型
  */
-export enum HTTPInterceptorType {
-  BEFORE,
-  AFTER,
-}
+export type HTTPInterceptorType = 'before' | 'after'
 
 /**
  * 存储引擎类型
  */
-export enum StorageEngine {
-  LOCAL_STORAGE,
-  SESSION_STORAGE,
-}
+export type StorageEngine = 'local_storage' | 'session_storage'
 
 /**
  * 菜单数据结构

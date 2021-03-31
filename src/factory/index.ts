@@ -5,15 +5,12 @@ import {
   HAPPYKIT_PARENT_ROUTE,
   HappyKitFramework,
   HappyKitRouter,
-  LinkTarget,
   MenuAdapter,
   MenuItem,
-  MenuType,
   PageIdFactory,
   RouterInjectOption,
   RouterInterceptor,
   RouterInterceptorOption,
-  RouterInterceptorType,
   TrackerIdFactory,
 } from '../types'
 import { deepClone, getCanvasFingerPrint, uuid } from '../utils'
@@ -39,9 +36,9 @@ export function createEmptyMenuItem(): MenuItem {
     view: '',
     isRouter: false,
     isKeepalive: false,
-    type: MenuType.MENU,
+    type: 'menu',
     externalLink: false,
-    linkTarget: LinkTarget.TAB,
+    linkTarget: 'tab',
     externalLinkAddress: '',
     hide: false,
     isHome: false,
@@ -66,14 +63,14 @@ export function createDefaultMenuAdapter(): MenuAdapter<MenuItem> {
       const menuTreeConverted: MenuItem[] = []
 
       const menuTypeMap: any = {
-        menu: MenuType.MENU,
-        point: MenuType.POINT,
+        menu: 'menu',
+        point: 'point',
       }
 
       const linkTargetMap: any = {
-        _tab: LinkTarget.TAB,
-        _self: LinkTarget.SELF,
-        _blank: LinkTarget.BLANK,
+        _tab: 'tab',
+        _self: 'self',
+        _blank: 'blank',
       }
 
       const forEachTree = (tree: any[], pNode?: MenuItem) => {
@@ -88,9 +85,9 @@ export function createDefaultMenuAdapter(): MenuAdapter<MenuItem> {
           treeNode.view = tree[i].view || ''
           treeNode.isRouter = tree[i].isRouter || false
           treeNode.isKeepalive = tree[i].isKeepalive || false
-          treeNode.type = menuTypeMap[tree[i].type] || MenuType.MENU
+          treeNode.type = tree[i].type || 'menu'
           treeNode.externalLink = tree[i].externalLink || false
-          treeNode.linkTarget = linkTargetMap[tree[i].externalLink] || LinkTarget.TAB
+          treeNode.linkTarget = linkTargetMap[tree[i].externalLink] || 'tab'
           treeNode.externalLinkAddress = tree[i].externalLinkAddress || ''
           treeNode.hide = tree[i].hide || false
           treeNode.isHome = tree[i].isHome || false
@@ -115,7 +112,7 @@ export function createDefaultMenuAdapter(): MenuAdapter<MenuItem> {
           // 记录id映射表
           menuIdMappingMap.set(treeNode.menuId, treeNode)
 
-          if (treeNode.type === MenuType.MENU) {
+          if (treeNode.type === 'menu') {
             if (!treeNode.isRouter) {
               forEachTree(tree[i].children, treeNode)
             } else {
@@ -128,9 +125,9 @@ export function createDefaultMenuAdapter(): MenuAdapter<MenuItem> {
                 pointNode.view = e.view || ''
                 pointNode.isRouter = e.isRouter || false
                 pointNode.isKeepalive = e.isKeepalive || false
-                pointNode.type = menuTypeMap[e.type] || MenuType.POINT
+                pointNode.type = menuTypeMap[e.type] || 'point'
                 pointNode.externalLink = e.externalLink || false
-                pointNode.linkTarget = linkTargetMap[e.externalLink] || LinkTarget.TAB
+                pointNode.linkTarget = linkTargetMap[e.externalLink] || 'tab'
                 pointNode.externalLinkAddress = e.externalLinkAddress || ''
                 pointNode.hide = e.hide || false
                 pointNode.isHome = e.isHome || false
@@ -138,7 +135,7 @@ export function createDefaultMenuAdapter(): MenuAdapter<MenuItem> {
                 treeNode.pointList.push(pointNode)
                 treeNode.pointsMap.set(pointNode.permissionKey, pointNode)
               })
-              if (!treeNode.externalLink || (treeNode.externalLink && treeNode.linkTarget === LinkTarget.TAB)) {
+              if (!treeNode.externalLink || (treeNode.externalLink && treeNode.linkTarget === 'tab')) {
                 routeMappingList.push(treeNode)
               }
             }
@@ -318,7 +315,7 @@ export function upgradeRouter(framework: HappyKitFramework, router: Router): Hap
  * @param options
  */
 export function createDefaultRouterInterceptor(options: RouterInterceptorOption): RouterInterceptor {
-  if (options.interceptorType === RouterInterceptorType.BEFORE) {
+  if (options.interceptorType === 'before') {
     return {
       options,
       async filter(to, from, next) {

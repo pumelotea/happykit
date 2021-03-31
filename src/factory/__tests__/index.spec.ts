@@ -1,5 +1,5 @@
 import { createDefaultPageIdFactory, createDefaultTrackerIdFactory, createEmptyMenuItem } from '../index'
-import { HAPPYKIT_INJECT, LinkTarget, MenuItem, MenuType } from '../../types'
+import { MenuItem } from '../../types'
 import { createHappyFramework } from '../../index'
 import { uuid } from '../../utils'
 import { createApp, defineComponent } from 'vue'
@@ -15,9 +15,9 @@ test('createEmptyMenuItem', () => {
     view: '',
     isRouter: false,
     isKeepalive: false,
-    type: MenuType.MENU,
+    type: 'menu',
     externalLink: false,
-    linkTarget: LinkTarget.TAB,
+    linkTarget: 'tab',
     externalLinkAddress: '',
     hide: false,
     isHome: false,
